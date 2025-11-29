@@ -1,2 +1,7 @@
 # smartedu-helper
-适用于智慧中小学平台的一系列工具。WIP
+Helper for SmartEdu. Working in progress.
+
+## Features
+- Download textbooks as pdf.
+- More...
+

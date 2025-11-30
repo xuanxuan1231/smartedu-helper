@@ -1,5 +1,4 @@
 from urllib import parse
-
 from PySide6.QtCore import QObject, Slot, Signal
 
 class LinkParser(QObject):
@@ -7,7 +6,6 @@ class LinkParser(QObject):
     
     def __init__(self):
         super().__init__()
-        
 
     @Slot(str)
     def parseLink(self, link: str) -> dict:
@@ -30,12 +28,14 @@ class LinkParser(QObject):
     
         # parse query string
         qs = parse.parse_qs(o.query)
+        # get link from query string
         try:
             link = qs.get("file")[0]
         except:
             self.linkParsed.emit({"error": "File link not found. Check your input."})
             return
         
+        # get header from query string        
         try:
             header = qs.get("headers")[0][1:-1]
         except:

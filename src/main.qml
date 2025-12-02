@@ -3,7 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
 
-
 FluentWindow {
     id: root
     title: qsTr("Smartedu Helper")

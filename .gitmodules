@@ -1,0 +1,3 @@
+[submodule "list"]
+	path = list
+	url = https://github.com/xuanxuan1231/smartedu-booklist.git

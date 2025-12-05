@@ -37,7 +37,7 @@ Frame {
             }
         }
 
-        Column {
+        ColumnLayout {
             id: headerContainer
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -47,13 +47,25 @@ Frame {
                 text: qsTr("Header")
                 font.bold: true
             }
-            TextArea {
-                id: headerArea
-                readOnly: true
-                wrapMode: Text.Wrap
+            RowLayout {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 100
-                width: parent.width
+                Layout.fillHeight: true
+                spacing: frame.spacing
+
+                TextArea {
+                    id: headerArea
+                    readOnly: true
+                    wrapMode: Text.Wrap
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
+
+                Button {
+                    text: qsTr("Save")
+                    Layout.alignment: Qt.AlignRight | Qt.AlignTop
+                    highlighted: true
+                    onClicked: console.log("本来这是要把header存下来下载用的，但是还没写ww")
+                }
             }
         }
     }

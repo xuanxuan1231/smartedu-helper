@@ -22,14 +22,21 @@ FluentPage {
             }
         }
         InfoBar {
-            id: infoBar
+            id: instrucBar
             width: parent.width
             Layout.fillWidth: true
             title: qsTr("How to get the viewer URL?")
             text: qsTr("Locate the request address for viewer.html in the \"Network\" tab of your browser's \"Developer Tools\". Alternatively, you can use our browser extension (Still working in progress).")
             closable: false
         }
-        
+        InfoBar {
+            id: firefoxBar
+            width: parent.width
+            Layout.fillWidth: true
+            title: qsTr("For Firefox users")
+            text: qsTr("Because Firefox automatically converts \"+\" to \" \" (Space), you need to replace all spaces (except the one after \"MAC\") in the URL with + before resolving.")
+            closable: false
+        }
         LinkInfo {
             id: linkInfo
             Layout.fillWidth: true

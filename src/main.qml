@@ -20,9 +20,30 @@ FluentWindow {
             page: Qt.resolvedUrl("pages/download.qml"),
         },
         {
-            title: qsTr("Browser Extension"),
-            icon: "ic_fluent_apps_add_in_20_regular",
-            page: Qt.resolvedUrl("pages/browser_ext.qml"),
+            title: qsTr("Textbooks"),
+            icon: "ic_fluent_book_20_regular",
+            subItems: [
+                {
+                    title: qsTr("Primary School"),
+                    page: Qt.resolvedUrl("pages/book/primary.qml"),
+                },
+                {
+                    title: qsTr("Primary School (5+4)"),
+                    page: Qt.resolvedUrl("pages/book/primary54.qml"),
+                },
+                {
+                    title: qsTr("Junior High School"),
+                    page: Qt.resolvedUrl("pages/book/junior.qml"),
+                },
+                {
+                    title: qsTr("Junior High School (5+4)"),
+                    page: Qt.resolvedUrl("pages/book/junior54.qml"),
+                },
+                {
+                    title: qsTr("Senior High School"),
+                    page: Qt.resolvedUrl("pages/book/senior.qml"),
+                }
+            ],
         },
         {
             title: qsTr("Settings"),

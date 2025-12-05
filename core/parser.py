@@ -37,12 +37,12 @@ class LinkParser(QObject):
         
         # get header from query string        
         try:
-            header = qs.get("headers")[0][1:-1]
+            header = qs.get("headers")[0][1:-1]  # remove {}
         except:
             self.linkParsed.emit({"error": "Headers not found. Check your input."})
             return
 
-        link = parse.quote(link)
+        link = parse.quote(link, safe=':/?&=%+')
 
         # convert headers to curl style
         header = header.replace('":"', ': ')

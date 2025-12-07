@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import RinUI
 
 FluentPage {
-    title: qsTr("Junior High School Textbooks")
+    title: qsTr("Primary High School Textbooks")
     // 其实是通用的 其他的可以照搬
 
     RowLayout {
@@ -25,22 +25,22 @@ FluentPage {
 
                 Layout.preferredWidth: 200
                 Layout.maximumWidth: 200
-                model: JuniorBookList.get_subjects()
+                model: PrimaryBookList.get_subjects()
                 onCurrentIndexChanged: {
-                    versions = JuniorBookList.get_versions(currentIndex);
+                    versions = PrimaryBookList.get_versions(currentIndex);
                     versionCombo.model = versions;
                     if (versions && versions.length > 0) {
                         // 有可用版本
                         // 初始化版本
                         versionCombo.currentIndex = 0;
                         // 顺便初始化年级
-                        grades = JuniorBookList.get_grades(currentIndex, versionCombo.currentIndex);
+                        grades = PrimaryBookList.get_grades(currentIndex, versionCombo.currentIndex);
                         gradeCombo.model = grades;
                         if (grades && grades > 0) {
                             // 有可用年级
                             gradeCombo.currentIndex = 0;
                             // 再顺便初始化书籍
-                            books = JuniorBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex);
+                            books = PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex);
                             bookList.model = books;
                         } else {
                             gradeCombo.currentIndex = -1;
@@ -61,13 +61,13 @@ FluentPage {
 
                 Layout.preferredWidth: 200
                 Layout.maximumWidth: 200
-                model: JuniorBookList.get_versions(subjectCombo.currentIndex)
+                model: PrimaryBookList.get_versions(subjectCombo.currentIndex)
                 onCurrentIndexChanged: {
-                    grades = JuniorBookList.get_grades(subjectCombo.currentIndex, currentIndex);
+                    grades = PrimaryBookList.get_grades(subjectCombo.currentIndex, currentIndex);
                     gradeCombo.model = grades;
                     if (grades && grades.length > 0) {
                         gradeCombo.currentIndex = 0;
-                        books = JuniorBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex);
+                        books = PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex);
                         bookList.model = books;
                     } else {
                         gradeCombo.currentIndex = -1;
@@ -84,9 +84,9 @@ FluentPage {
 
                 Layout.preferredWidth: 200
                 Layout.maximumWidth: 200
-                model: JuniorBookList.get_grades(subjectCombo.currentIndex, versionCombo.currentIndex)
+                model: PrimaryBookList.get_grades(subjectCombo.currentIndex, versionCombo.currentIndex)
                 onCurrentIndexChanged: {
-                    books = JuniorBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, currentIndex);
+                    books = PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, currentIndex);
                     bookList.model = books;
                 }
             }}
@@ -99,7 +99,7 @@ FluentPage {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                model: JuniorBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex)
+                model: PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex)
 
                 delegate: ListViewDelegate {
                     middleArea: [

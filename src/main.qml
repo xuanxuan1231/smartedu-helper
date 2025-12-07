@@ -28,16 +28,8 @@ FluentWindow {
                     page: Qt.resolvedUrl("pages/book/primary.qml"),
                 },
                 {
-                    title: qsTr("Primary School (5+4)"),
-                    page: Qt.resolvedUrl("pages/book/primary54.qml"),
-                },
-                {
                     title: qsTr("Junior High School"),
                     page: Qt.resolvedUrl("pages/book/junior.qml"),
-                },
-                {
-                    title: qsTr("Junior High School (5+4)"),
-                    page: Qt.resolvedUrl("pages/book/junior54.qml"),
                 },
                 {
                     title: qsTr("Senior High School"),

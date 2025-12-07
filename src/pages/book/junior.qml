@@ -6,6 +6,13 @@ FluentPage {
     title: qsTr("Junior High School Textbooks")
     // 其实是通用的 其他的可以照搬
 
+    // Avoid null deref during shutdown when context properties disappear
+    property bool hasBookList: typeof JuniorBookList !== "undefined" && JuniorBookList !== null
+    // Local caches to avoid implicit global writes
+    property var versions: []
+    property var grades: []
+    property var books: []
+
     RowLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
@@ -25,8 +32,14 @@ FluentPage {
 
                 Layout.preferredWidth: 200
                 Layout.maximumWidth: 200
-                model: JuniorBookList.get_subjects()
+                model: hasBookList ? JuniorBookList.get_subjects() : []
                 onCurrentIndexChanged: {
+                    if (!hasBookList) {
+                        versionCombo.model = []
+                        gradeCombo.model = []
+                        bookList.model = []
+                        return
+                    }
                     versions = JuniorBookList.get_versions(currentIndex);
                     versionCombo.model = versions;
                     if (versions && versions.length > 0) {
@@ -36,7 +49,7 @@ FluentPage {
                         // 顺便初始化年级
                         grades = JuniorBookList.get_grades(currentIndex, versionCombo.currentIndex);
                         gradeCombo.model = grades;
-                        if (grades && grades > 0) {
+                        if (grades && grades.length > 0) {
                             // 有可用年级
                             gradeCombo.currentIndex = 0;
                             // 再顺便初始化书籍
@@ -61,8 +74,13 @@ FluentPage {
 
                 Layout.preferredWidth: 200
                 Layout.maximumWidth: 200
-                model: JuniorBookList.get_versions(subjectCombo.currentIndex)
+                model: hasBookList ? JuniorBookList.get_versions(subjectCombo.currentIndex) : []
                 onCurrentIndexChanged: {
+                    if (!hasBookList) {
+                        gradeCombo.model = []
+                        bookList.model = []
+                        return
+                    }
                     grades = JuniorBookList.get_grades(subjectCombo.currentIndex, currentIndex);
                     gradeCombo.model = grades;
                     if (grades && grades.length > 0) {
@@ -84,8 +102,12 @@ FluentPage {
 
                 Layout.preferredWidth: 200
                 Layout.maximumWidth: 200
-                model: JuniorBookList.get_grades(subjectCombo.currentIndex, versionCombo.currentIndex)
+                model: hasBookList ? JuniorBookList.get_grades(subjectCombo.currentIndex, versionCombo.currentIndex) : []
                 onCurrentIndexChanged: {
+                    if (!hasBookList) {
+                        bookList.model = []
+                        return
+                    }
                     books = JuniorBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, currentIndex);
                     bookList.model = books;
                 }
@@ -99,17 +121,16 @@ FluentPage {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                model: JuniorBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex)
+                model: hasBookList ? JuniorBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex) : []
 
                 delegate: ListViewDelegate {
                     middleArea: [
                         // middleArea takes a list of items for its ColumnLayout
                         Text {
                             text: modelData.name
-                            font.bold: true
                             elide: Text.ElideRight
                             Layout.fillWidth: true
-                            font.pixelSize: 18
+                            font.pixelSize: 16
                         },
                         Text {
                             text: modelData.content_id + " " + modelData.number // Secondary text from model

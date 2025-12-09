@@ -5,11 +5,11 @@ import RinUI
 import "../../components"
 
 FluentPage {
-    title: qsTr("Primary School Textbooks")
+    title: qsTr("Primary School (Five-year school system) Textbooks")
     // 其实是通用的 其他的可以照搬
 
     // Avoid null deref during shutdown when context properties disappear
-    property bool hasBookList: typeof PrimaryBookList !== "undefined" && PrimaryBookList !== null
+    property bool hasBookList: typeof Primary54BookList !== "undefined" && Primary54BookList !== null
     // Local caches to avoid implicit global writes
     property var versions: []
     property var grades: []
@@ -36,7 +36,7 @@ FluentPage {
 
                 Layout.preferredWidth: 200
                 Layout.maximumWidth: 200
-                model: hasBookList ? PrimaryBookList.get_subjects() : []
+                model: hasBookList ? Primary54BookList.get_subjects() : []
                 onCurrentIndexChanged: {
                     if (!hasBookList) {
                         versionCombo.model = []
@@ -44,20 +44,20 @@ FluentPage {
                         bookList.model = []
                         return
                     }
-                    versions = PrimaryBookList.get_versions(currentIndex);
+                    versions = Primary54BookList.get_versions(currentIndex);
                     versionCombo.model = versions;
                     if (versions && versions.length > 0) {
                         // 有可用版本
                         // 初始化版本
                         versionCombo.currentIndex = 0;
                         // 顺便初始化年级
-                        grades = PrimaryBookList.get_grades(currentIndex, versionCombo.currentIndex);
+                        grades = Primary54BookList.get_grades(currentIndex, versionCombo.currentIndex);
                         gradeCombo.model = grades;
                         if (grades && grades.length > 0) {
                             // 有可用年级
                             gradeCombo.currentIndex = 0;
                             // 再顺便初始化书籍
-                            books = PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex);
+                            books = Primary54BookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex);
                             bookList.model = books;
                         } else {
                             gradeCombo.currentIndex = -1;
@@ -78,18 +78,18 @@ FluentPage {
 
                 Layout.preferredWidth: 200
                 Layout.maximumWidth: 200
-                model: hasBookList ? PrimaryBookList.get_versions(subjectCombo.currentIndex) : []
+                model: hasBookList ? Primary54BookList.get_versions(subjectCombo.currentIndex) : []
                 onCurrentIndexChanged: {
                     if (!hasBookList) {
                         gradeCombo.model = []
                         bookList.model = []
                         return
                     }
-                    grades = PrimaryBookList.get_grades(subjectCombo.currentIndex, currentIndex);
+                    grades = Primary54BookList.get_grades(subjectCombo.currentIndex, currentIndex);
                     gradeCombo.model = grades;
                     if (grades && grades.length > 0) {
                         gradeCombo.currentIndex = 0;
-                        books = PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex);
+                        books = Primary54BookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex);
                         bookList.model = books;
                     } else {
                         gradeCombo.currentIndex = -1;
@@ -106,13 +106,13 @@ FluentPage {
 
                 Layout.preferredWidth: 200
                 Layout.maximumWidth: 200
-                model: hasBookList ? PrimaryBookList.get_grades(subjectCombo.currentIndex, versionCombo.currentIndex) : []
+                model: hasBookList ? Primary54BookList.get_grades(subjectCombo.currentIndex, versionCombo.currentIndex) : []
                 onCurrentIndexChanged: {
                     if (!hasBookList) {
                         bookList.model = []
                         return
                     }
-                    books = PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, currentIndex);
+                    books = Primary54BookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, currentIndex);
                     bookList.model = books;
                 }
             }}
@@ -125,7 +125,7 @@ FluentPage {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                model: hasBookList ? PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex) : []
+                model: hasBookList ? Primary54BookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex) : []
 
                 delegate: ListViewDelegate {
                     middleArea: [

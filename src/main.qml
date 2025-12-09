@@ -32,6 +32,14 @@ FluentWindow {
                     page: Qt.resolvedUrl("pages/book/junior.qml"),
                 },
                 {
+                    title: qsTr("Primary School (Five-year school system)"),
+                    page: Qt.resolvedUrl("pages/book/primary54.qml"),
+                },
+                {
+                    title: qsTr("Junior High School (Five-year school system)"),
+                    page: Qt.resolvedUrl("pages/book/junior54.qml"),
+                },
+                {
                     title: qsTr("Senior High School"),
                     page: Qt.resolvedUrl("pages/book/senior.qml"),
                 }

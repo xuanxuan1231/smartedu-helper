@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 import RinUI
 
+import "../../components"
+
 FluentPage {
     title: qsTr("Junior High School Textbooks")
     // 其实是通用的 其他的可以照搬
@@ -12,6 +14,8 @@ FluentPage {
     property var versions: []
     property var grades: []
     property var books: []
+    // Currently selected book item
+    property var selectedBook: bookList.model && bookList.currentIndex >= 0 ? bookList.model[bookList.currentIndex] : null
 
     RowLayout {
         Layout.fillHeight: true
@@ -153,7 +157,9 @@ FluentPage {
                         size: 16
                         Layout.alignment: Qt.AlignVCenter
                         onClicked: {
-                            console.log("还没有 等着");
+                            console.log("在写了捏");
+                            bookList.currentIndex = index;
+                            downloadDialog.open();
                         }
                     }
 
@@ -162,6 +168,13 @@ FluentPage {
             }
 
         }
+        DownloadDialog {
+            id: downloadDialog
 
+            content_id: selectedBook ? selectedBook.content_id : ""
+            number: selectedBook ? selectedBook.number : ""
+            subject: selectedBook ? subjectCombo.currentText : ""
+            bookName: selectedBook ? selectedBook.name : ""
+        }
     }
 

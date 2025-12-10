@@ -1,0 +1,44 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: 3.13
+          activate-environment: true
+
+      - name: Install dependencies
+        run: |
+          uv pip install -r requirements.txt
+          uv install pyinstaller
+
+      - name: Build
+        run: |
+          pyinstaller `
+            --noconsole `
+            --contents-directory="." `
+            --name Smartedu-Helper `
+            --add-data src:src `
+            app.py
+
+      - name: Zip
+        run: |
+          powershell Compress-Archive -Path dist/Smartedu-Helper/* -DestinationPath dist/Smartedu-Helper-Windows.zip
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: Smartedu-Helper-Windows
+          path: dist/Smartedu-Helper-Windows.zip

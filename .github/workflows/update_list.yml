@@ -1,15 +1,13 @@
-name: Daily Update List
+name: Update List
 
 on:
-  schedule:
-    - cron: '0 1 * * *' # 每天 UTC 01:00 运行
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  run-main:
+  update-list:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

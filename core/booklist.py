@@ -11,7 +11,7 @@ class GenericBookList(QObject):
 
     def load_books(self):
         try:
-            with open(self.file, "r") as f:
+            with open(self.file, "r", encoding="utf-8") as f:
                 return json.load(f)
         except FileNotFoundError:
             print(f"Book list file '{self.file}' not found.")

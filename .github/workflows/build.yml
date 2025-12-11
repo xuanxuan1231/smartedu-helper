@@ -18,6 +18,9 @@ jobs:
         with:
           python-version: 3.13
           activate-environment: true
+        
+      - name: Restore list
+        run: git submodule update --remote
 
       - name: Install dependencies
         run: |
@@ -31,6 +34,8 @@ jobs:
             --contents-directory="." `
             --name Smartedu-Helper `
             --add-data src:src `
+            --add-data i18n:i18n `
+            --add-data list:list `
             app.py
 
       - name: Zip

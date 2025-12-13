@@ -2,6 +2,34 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>DownloadDialog</name>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="10"/>
+        <source>Downloading %1 Textbook</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="14"/>
+        <source>Please check the information of the textbook you want to download.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="23"/>
+        <source>Book Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="39"/>
+        <source>Content ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="54"/>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LinkInfo</name>
     <message>
         <location filename="../src/components/LinkInfo.qml" line="27"/>
@@ -79,24 +107,55 @@
     </message>
 </context>
 <context>
+    <name>downloads</name>
+    <message>
+        <location filename="../src/pages/downloads.qml" line="9"/>
+        <source>Downloads</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>junior</name>
     <message>
-        <location filename="../src/pages/book/junior.qml" line="6"/>
+        <location filename="../src/pages/book/junior.qml" line="8"/>
         <source>Junior High School Textbooks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/book/junior.qml" line="27"/>
+        <location filename="../src/pages/book/junior.qml" line="31"/>
         <source>Subject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/book/junior.qml" line="69"/>
+        <location filename="../src/pages/book/junior.qml" line="73"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/book/junior.qml" line="97"/>
+        <location filename="../src/pages/book/junior.qml" line="101"/>
+        <source>Grade</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>junior54</name>
+    <message>
+        <location filename="../src/pages/book/junior54.qml" line="8"/>
+        <source>Junior High School (Five-year school system) Textbooks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/junior54.qml" line="31"/>
+        <source>Subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/junior54.qml" line="73"/>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/junior54.qml" line="101"/>
         <source>Grade</source>
         <translation type="unfinished"></translation>
     </message>
@@ -130,11 +189,26 @@
     </message>
     <message>
         <location filename="../src/main.qml" line="35"/>
+        <source>Primary School (Five-year school system)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.qml" line="39"/>
+        <source>Junior High School (Five-year school system)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.qml" line="43"/>
         <source>Senior High School</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="41"/>
+        <location filename="../src/main.qml" line="49"/>
+        <source>Downloads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.qml" line="54"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -142,22 +216,45 @@
 <context>
     <name>primary</name>
     <message>
-        <location filename="../src/pages/book/primary.qml" line="6"/>
+        <location filename="../src/pages/book/primary.qml" line="8"/>
         <source>Primary School Textbooks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/book/primary.qml" line="27"/>
+        <location filename="../src/pages/book/primary.qml" line="31"/>
         <source>Subject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/book/primary.qml" line="69"/>
+        <location filename="../src/pages/book/primary.qml" line="73"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/book/primary.qml" line="97"/>
+        <location filename="../src/pages/book/primary.qml" line="101"/>
+        <source>Grade</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>primary54</name>
+    <message>
+        <location filename="../src/pages/book/primary54.qml" line="8"/>
+        <source>Primary School (Five-year school system) Textbooks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/primary54.qml" line="31"/>
+        <source>Subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/primary54.qml" line="73"/>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/primary54.qml" line="101"/>
         <source>Grade</source>
         <translation type="unfinished"></translation>
     </message>
@@ -176,7 +273,27 @@
     </message>
     <message>
         <location filename="../src/pages/settings.qml" line="14"/>
-        <source>Select your preferred language for Smartedu Helper.</source>
+        <source>Select your preferred Language for Smartedu Helper.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="43"/>
+        <source>File Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="44"/>
+        <source>Select a download server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="70"/>
+        <source>Use Oversea Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="71"/>
+        <source>Download textbooks from oversea server. No need to parse header.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

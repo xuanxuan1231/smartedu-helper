@@ -47,7 +47,7 @@ FluentWindow {
         },
         {
             title: qsTr("Downloads"),
-            icon: "ic_fluent_cloud_download_20_regular",
+            icon: "ic_fluent_task_list_square_ltr_20_regular",
             page: Qt.resolvedUrl("pages/downloads.qml"),
         },
         {

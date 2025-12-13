@@ -66,7 +66,7 @@ Dialog {
     onAccepted: {
         console.log("Dialog accepted:", content_id, path, subject, bookName)
         DownloadManager.addTask(bookName,
-                                "https://r" + HelperConfig.getFileServer() + "-ndr-private.ykt.cbern.com.cn" + path,
+                                path,
                                 HelperConfig.getHeader(),
                                 HelperConfig.getDefaultPath()
                                 )

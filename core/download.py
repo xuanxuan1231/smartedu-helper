@@ -10,7 +10,7 @@ class DownloadManager(QObject):
     taskCompleted = Signal(str)
     taskError = Signal(str)  # task name, error message
 
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
         self.tasks = []
 
@@ -18,9 +18,10 @@ class DownloadManager(QObject):
 
         self.newTaskAdded.connect(self.onNewTaskAdded)
         self.taskCompleted.connect(self.onTaskCompleted)
+        self.parent = parent
 
     @Slot(str, str, str, str, result=dict)
-    def addTask(self, name: str, url: str, header: str, save_path: str) -> dict:
+    def addTask(self, name: str, path: str, header: str, save_path: str) -> dict:
         for task in self.tasks:
             if task["name"] == name:
                 if task["status"] == "error":
@@ -30,6 +31,7 @@ class DownloadManager(QObject):
                     break
                 logger.warning(f"任务 {name} 已存在，无法添加重复任务")
                 return {"state": "warning", "message": self.tr("Task with the same name already exists.")}
+        url = f"https://r{self.parent.helperConfig.getFileServer()}-ndr-{"oversea" if self.parent.helperConfig.getOverseaServer() else "private"}.ykt.cbern.com.cn{path}"
         task = {
             "name": name,
             "url": url,

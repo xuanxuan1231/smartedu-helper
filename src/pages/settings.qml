@@ -9,9 +9,9 @@ FluentPage {
 
         SettingCard {
             Layout.fillWidth: true
-            //icon: "ic_fluent_translate_20_regular" // Fluent icon name for the left area
+            icon.name: "ic_fluent_translate_20_regular"
             title: qsTr("Display Language")
-            description: qsTr("Select your preferred Language for Smartedu Helper.")
+            description: qsTr("Select your preferred language for Smartedu Helper.")
 
             ComboBox {
                 property var data: [HelperConfig.getSystemLanguage(), "en_US", "zh_CN"]
@@ -37,13 +37,13 @@ FluentPage {
             }
         }
 
-        SettingCard {
+        SettingExpander {
             Layout.fillWidth: true
-            //icon: "ic_fluent_translate_20_regular" // Fluent icon name for the left area
+            icon.name: "ic_fluent_arrow_download_20_regular"
             title: qsTr("File Server")
             description: qsTr("Select a download server.")
 
-            ComboBox {
+            content: ComboBox {
                 property var data: ["1", "2", "3"/*, "oversea"*/]
                 property bool initialized: false
                 model: ListModel {
@@ -63,6 +63,16 @@ FluentPage {
                     if (initialized) {
                         console.log("FileServer changed to: " + data[currentIndex])
                         HelperConfig.setFileServer(data[currentIndex])
+                    }
+                }
+            }
+            SettingItem {
+                title: qsTr("Use Oversea Server")
+                description: qsTr("Download textbooks from oversea server. No need to parse header. Users in China cannot access this server.")
+                Switch {
+                    checked: HelperConfig.getOverseaServer()
+                    onCheckedChanged: {
+                        HelperConfig.setOverseaServer(checked)
                     }
                 }
             }

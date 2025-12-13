@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
+<context>
+    <name>DownloadDialog</name>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="10"/>
+        <source>Downloading %1 Textbook</source>
+        <translation>下载 %1 课本</translation>
+    </message>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="14"/>
+        <source>Please check the information of the textbook you want to download.</source>
+        <translation>请检查你要下载的课本的信息。</translation>
+    </message>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="23"/>
+        <source>Book Name</source>
+        <translation>课本名称</translation>
+    </message>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="39"/>
+        <source>Content ID</source>
+        <translation>内容 ID</translation>
+    </message>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="54"/>
+        <source>Path</source>
+        <translation>URL 路径</translation>
+    </message>
+</context>
 <context>
     <name>LinkInfo</name>
     <message>
@@ -79,24 +107,55 @@
     </message>
 </context>
 <context>
+    <name>downloads</name>
+    <message>
+        <location filename="../src/pages/downloads.qml" line="9"/>
+        <source>Downloads</source>
+        <translation>下载任务</translation>
+    </message>
+</context>
+<context>
     <name>junior</name>
     <message>
-        <location filename="../src/pages/book/junior.qml" line="6"/>
+        <location filename="../src/pages/book/junior.qml" line="8"/>
         <source>Junior High School Textbooks</source>
         <translation>初中课本</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/junior.qml" line="27"/>
+        <location filename="../src/pages/book/junior.qml" line="31"/>
         <source>Subject</source>
         <translation>学科</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/junior.qml" line="69"/>
+        <location filename="../src/pages/book/junior.qml" line="73"/>
         <source>Version</source>
         <translation>版本</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/junior.qml" line="97"/>
+        <location filename="../src/pages/book/junior.qml" line="101"/>
+        <source>Grade</source>
+        <translation>年级</translation>
+    </message>
+</context>
+<context>
+    <name>junior54</name>
+    <message>
+        <location filename="../src/pages/book/junior54.qml" line="8"/>
+        <source>Junior High School (Five-year school system) Textbooks</source>
+        <translation>初中 (五·四学制) 课本</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/junior54.qml" line="31"/>
+        <source>Subject</source>
+        <translation>学科</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/junior54.qml" line="73"/>
+        <source>Version</source>
+        <translation>版本</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/junior54.qml" line="101"/>
         <source>Grade</source>
         <translation>年级</translation>
     </message>
@@ -130,11 +189,26 @@
     </message>
     <message>
         <location filename="../src/main.qml" line="35"/>
+        <source>Primary School (Five-year school system)</source>
+        <translation>小学 (五·四学制) 课本</translation>
+    </message>
+    <message>
+        <location filename="../src/main.qml" line="39"/>
+        <source>Junior High School (Five-year school system)</source>
+        <translation>初中 (五·四学制) 课本</translation>
+    </message>
+    <message>
+        <location filename="../src/main.qml" line="43"/>
         <source>Senior High School</source>
         <translation>高中课本</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="41"/>
+        <location filename="../src/main.qml" line="49"/>
+        <source>Downloads</source>
+        <translation>下载任务</translation>
+    </message>
+    <message>
+        <location filename="../src/main.qml" line="54"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
@@ -142,22 +216,45 @@
 <context>
     <name>primary</name>
     <message>
-        <location filename="../src/pages/book/primary.qml" line="6"/>
+        <location filename="../src/pages/book/primary.qml" line="8"/>
         <source>Primary School Textbooks</source>
         <translation>小学课本</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/primary.qml" line="27"/>
+        <location filename="../src/pages/book/primary.qml" line="31"/>
         <source>Subject</source>
         <translation>学科</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/primary.qml" line="69"/>
+        <location filename="../src/pages/book/primary.qml" line="73"/>
         <source>Version</source>
         <translation>版本</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/primary.qml" line="97"/>
+        <location filename="../src/pages/book/primary.qml" line="101"/>
+        <source>Grade</source>
+        <translation>年级</translation>
+    </message>
+</context>
+<context>
+    <name>primary54</name>
+    <message>
+        <location filename="../src/pages/book/primary54.qml" line="8"/>
+        <source>Primary School (Five-year school system) Textbooks</source>
+        <translation>小学 (五·四学制) 课本</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/primary54.qml" line="31"/>
+        <source>Subject</source>
+        <translation>学科</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/primary54.qml" line="73"/>
+        <source>Version</source>
+        <translation>版本</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/primary54.qml" line="101"/>
         <source>Grade</source>
         <translation>年级</translation>
     </message>
@@ -173,6 +270,34 @@
         <location filename="../src/pages/settings.qml" line="13"/>
         <source>Display Language</source>
         <translation>显示语言</translation>
+    </message>
+    <message>
+        <source>Select your preferred Language for Smartedu Helper.</source>
+        <translation type="vanished">选择 Smartedu Helper 的显示语言。</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="43"/>
+        <source>File Server</source>
+        <translation>文件服务器</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="44"/>
+        <source>Select a download server.</source>
+        <translation>选择一个下载服务器</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="70"/>
+        <source>Use Oversea Server</source>
+        <translation>使用海外 (Oversea) 服务器</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="71"/>
+        <source>Download textbooks from oversea server. No need to parse header. Users in China cannot access this server.</source>
+        <translation>从海外 (Oversea) 服务器下载课本。不需要解析请求头。中国大陆用户无法访问。</translation>
+    </message>
+    <message>
+        <source>Download textbooks from oversea server. No need to parse header.</source>
+        <translation type="vanished">从海外 (Oversea) 服务器下载课本。不需要解析请求头。</translation>
     </message>
     <message>
         <location filename="../src/pages/settings.qml" line="14"/>

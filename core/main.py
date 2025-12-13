@@ -18,7 +18,7 @@ class MainWindow(RinUIWindow):
         self.juniorBookList = GenericBookList("list/junior.json")
         self.junior54BookList = GenericBookList("list/junior54.json")
         self.helperConfig = HelperConfig(self)
-        self.downloadManager = DownloadManager()
+        self.downloadManager = DownloadManager(self)
 
         self.engine.rootContext().setContextProperty("LinkParser", self.linkParser)
         self.engine.rootContext().setContextProperty("PrimaryBookList", self.primaryBookList)

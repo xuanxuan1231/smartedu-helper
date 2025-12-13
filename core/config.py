@@ -12,6 +12,7 @@ DEFAULT_CONFIG = {
         "language": QLocale.system().name(),
     },
     "file_server": "1",
+    "oversea": False,
     "header": "0",
     "default_path": Path(Path(__file__).parent.parent / "downloads")
 }
@@ -64,6 +65,15 @@ class HelperConfig(ConfigManager, QObject):
     @Slot(str)
     def setFileServer(self, server: str) -> None:
         self.config["file_server"] = server
+        self.save_config()
+
+    @Slot(result=bool)
+    def getOverseaServer(self) -> bool:
+        return self.config["file_server"] != "false"
+
+    @Slot(bool)
+    def setOverseaServer(self, oversea: bool) -> None:
+        self.config["oversea"] = oversea
         self.save_config()
 
     @Slot(result=str)

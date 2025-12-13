@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QApplication
 import RinUI
 from RinUI import RinUIWindow
 
-from core import LinkParser, GenericBookList, HelperConfig
+from core import *
 
 
 class MainWindow(RinUIWindow):
@@ -18,6 +18,7 @@ class MainWindow(RinUIWindow):
         self.juniorBookList = GenericBookList("list/junior.json")
         self.junior54BookList = GenericBookList("list/junior54.json")
         self.helperConfig = HelperConfig(self)
+        self.downloadManager = DownloadManager()
 
         self.engine.rootContext().setContextProperty("LinkParser", self.linkParser)
         self.engine.rootContext().setContextProperty("PrimaryBookList", self.primaryBookList)
@@ -25,5 +26,6 @@ class MainWindow(RinUIWindow):
         self.engine.rootContext().setContextProperty("JuniorBookList", self.juniorBookList)
         self.engine.rootContext().setContextProperty("Junior54BookList", self.junior54BookList)
         self.engine.rootContext().setContextProperty("HelperConfig", self.helperConfig)
+        self.engine.rootContext().setContextProperty("DownloadManager", self.downloadManager)
 
         self.load("src/main.qml")

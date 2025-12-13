@@ -3,7 +3,7 @@ import RinUI
 
 Dialog {
     property string content_id
-    property string number
+    property string path
     property string subject
     property string bookName
 
@@ -51,15 +51,24 @@ Dialog {
         //padding: 5
 
         Text {
-            text: qsTr("Number")
+            text: qsTr("Path")
             font.pixelSize: 13
         }
 
         Text {
-            text: number
+            text: path
+            wrapMode: Text.Wrap
             font.pixelSize: 15
         }
 
     }
 
+    onAccepted: {
+        console.log("Dialog accepted:", content_id, path, subject, bookName)
+        DownloadManager.addTask(bookName,
+                                "https://r" + HelperConfig.getFileServer() + "-ndr-private.ykt.cbern.com.cn" + path,
+                                HelperConfig.getHeader(),
+                                HelperConfig.getDefaultPath()
+                                )
+    }
 }

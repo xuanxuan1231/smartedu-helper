@@ -46,6 +46,11 @@ FluentWindow {
             ],
         },
         {
+            title: qsTr("Downloads"),
+            icon: "ic_fluent_cloud_download_20_regular",
+            page: Qt.resolvedUrl("pages/downloads.qml"),
+        },
+        {
             title: qsTr("Settings"),
             icon: "ic_fluent_settings_20_regular",
             page: Qt.resolvedUrl("pages/settings.qml"),

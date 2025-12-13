@@ -10,7 +10,10 @@ DEFAULT_CONFIG = {
     },
     "locale": {
         "language": QLocale.system().name(),
-    }
+    },
+    "file_server": "1",
+    "header": "0",
+    "default_path": Path(Path(__file__).parent.parent / "downloads")
 }
 
 class HelperConfig(ConfigManager, QObject):
@@ -24,6 +27,8 @@ class HelperConfig(ConfigManager, QObject):
         QObject.__init__(self)
 
         self.load_config(DEFAULT_CONFIG)
+        # 启动时设置语言
+        self.setLanguage(self.config["locale"]["language"])
 
     # i18n
     @Slot(result=str)
@@ -51,3 +56,30 @@ class HelperConfig(ConfigManager, QObject):
         QApplication.instance().installTranslator(self.ui_translator)
         QApplication.instance().installTranslator(self.translator)
         self.parent.engine.retranslate()
+
+    @Slot(result=str)
+    def getFileServer(self) -> str:
+        return self.config["file_server"]
+    
+    @Slot(str)
+    def setFileServer(self, server: str) -> None:
+        self.config["file_server"] = server
+        self.save_config()
+
+    @Slot(result=str)
+    def getHeader(self) -> str:
+        return self.config["header"]
+
+    @Slot(str)
+    def setHeader(self, header: str) -> None:
+        self.config["header"] = header
+        self.save_config()
+
+    @Slot(result=str)
+    def getDefaultPath(self) -> str:
+        return self.config["default_path"]
+    
+    @Slot(str)
+    def setDefaultPath(self, path: str) -> None:
+        self.config["default_path"] = path
+        self.save_config()

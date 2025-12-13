@@ -137,7 +137,7 @@ FluentPage {
                             font.pixelSize: 16
                         },
                         Text {
-                            text: modelData.content_id + " " + modelData.number // Secondary text from model
+                            text: modelData.path // Secondary text from model
                             font.pixelSize: 12
                             color: Theme.currentTheme.colors.textSecondaryColor
                             elide: Text.ElideRight
@@ -172,7 +172,7 @@ FluentPage {
             id: downloadDialog
 
             content_id: selectedBook ? selectedBook.content_id : ""
-            number: selectedBook ? selectedBook.number : ""
+            path: selectedBook ? selectedBook.path : ""
             subject: selectedBook ? subjectCombo.currentText : ""
             bookName: selectedBook ? selectedBook.name : ""
         }

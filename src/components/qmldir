@@ -1,3 +1,4 @@
 CommandCase 1.0 CommandCase.qml
 LinkInfo 1.0 LinkInfo.qml
 DownloadDialog 1.0 DownloadDialog.qml
+DownloadItem 1.0 DownloadItem.qml

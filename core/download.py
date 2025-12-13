@@ -8,7 +8,7 @@ class DownloadManager(QObject):
     dataUpdated = Signal() #通知UI
     newTaskAdded = Signal()
     taskCompleted = Signal(str)
-    taskError = Signal(str)  # task name, error message
+    taskError = Signal(str, str)  # task name, error message
 
     def __init__(self, parent):
         super().__init__()
@@ -18,6 +18,7 @@ class DownloadManager(QObject):
 
         self.newTaskAdded.connect(self.onNewTaskAdded)
         self.taskCompleted.connect(self.onTaskCompleted)
+        self.taskError.connect(self.onTaskError)
         self.parent = parent
 
     @Slot(str, str, str, str, result=dict)
@@ -58,7 +59,7 @@ class DownloadManager(QObject):
                 task["status"] = "in_progress"
                 self.downloadThread = DownloadThread(task["name"], task["url"], {"x-nd-auth": task["headers"]}, task["save_path"])
                 self.downloadThread.finished.connect(lambda: self.taskCompleted.emit(task["name"]))
-                self.downloadThread.error.connect(lambda msg, name=task["name"]: self.onTaskError(name, msg))
+                self.downloadThread.error.connect(lambda msg, name=task["name"]: self.taskError.emit(name, msg))
                 self.downloadThread.progress.connect(lambda progress, name=task["name"]: self.updateProgress(name, progress))
                 self.downloadThread.start()
                 logger.debug(f"开始任务 {task['name']}")

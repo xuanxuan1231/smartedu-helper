@@ -4,27 +4,32 @@
 <context>
     <name>DownloadDialog</name>
     <message>
-        <location filename="../src/components/DownloadDialog.qml" line="10"/>
+        <location filename="../src/components/DownloadDialog.qml" line="11"/>
         <source>Downloading %1 Textbook</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/components/DownloadDialog.qml" line="14"/>
+        <location filename="../src/components/DownloadDialog.qml" line="15"/>
         <source>Please check the information of the textbook you want to download.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/components/DownloadDialog.qml" line="23"/>
+        <location filename="../src/components/DownloadDialog.qml" line="15"/>
+        <source>No textbooks available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="27"/>
         <source>Book Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/components/DownloadDialog.qml" line="39"/>
+        <location filename="../src/components/DownloadDialog.qml" line="46"/>
         <source>Content ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/components/DownloadDialog.qml" line="54"/>
+        <location filename="../src/components/DownloadDialog.qml" line="65"/>
         <source>Path</source>
         <translation type="unfinished"></translation>
     </message>
@@ -212,6 +217,11 @@
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/main.qml" line="68"/>
+        <source>An error occurred while downloading %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>primary</name>
@@ -273,7 +283,7 @@
     </message>
     <message>
         <location filename="../src/pages/settings.qml" line="14"/>
-        <source>Select your preferred Language for Smartedu Helper.</source>
+        <source>Select your preferred language for Smartedu Helper.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -293,7 +303,7 @@
     </message>
     <message>
         <location filename="../src/pages/settings.qml" line="71"/>
-        <source>Download textbooks from oversea server. No need to parse header.</source>
+        <source>Download textbooks from oversea server. No need to parse header. Users in China cannot access this server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

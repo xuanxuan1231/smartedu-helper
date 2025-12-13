@@ -59,4 +59,17 @@ FluentWindow {
 
     navigationView.navigationBar.minimumExpandWidth: width + 1
     navigationView.navigationBar.collapsed: true
+
+    Connections {
+        target: DownloadManager
+        function onTaskError(name, msg) {
+            floatLayer.createInfoBar({
+                severity: Severity.Error,
+                title: qsTr("An error occurred while downloading %1").arg(name),
+                text: msg,
+                position: Position.TopRight,
+                timeout: 5000
+            })
+        }
+    }
 }

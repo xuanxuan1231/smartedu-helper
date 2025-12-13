@@ -4,27 +4,32 @@
 <context>
     <name>DownloadDialog</name>
     <message>
-        <location filename="../src/components/DownloadDialog.qml" line="10"/>
+        <location filename="../src/components/DownloadDialog.qml" line="11"/>
         <source>Downloading %1 Textbook</source>
         <translation>下载 %1 课本</translation>
     </message>
     <message>
-        <location filename="../src/components/DownloadDialog.qml" line="14"/>
+        <location filename="../src/components/DownloadDialog.qml" line="15"/>
         <source>Please check the information of the textbook you want to download.</source>
         <translation>请检查你要下载的课本的信息。</translation>
     </message>
     <message>
-        <location filename="../src/components/DownloadDialog.qml" line="23"/>
+        <location filename="../src/components/DownloadDialog.qml" line="15"/>
+        <source>No textbooks available.</source>
+        <translation>没有可用的课本。</translation>
+    </message>
+    <message>
+        <location filename="../src/components/DownloadDialog.qml" line="27"/>
         <source>Book Name</source>
         <translation>课本名称</translation>
     </message>
     <message>
-        <location filename="../src/components/DownloadDialog.qml" line="39"/>
+        <location filename="../src/components/DownloadDialog.qml" line="46"/>
         <source>Content ID</source>
         <translation>内容 ID</translation>
     </message>
     <message>
-        <location filename="../src/components/DownloadDialog.qml" line="54"/>
+        <location filename="../src/components/DownloadDialog.qml" line="65"/>
         <source>Path</source>
         <translation>URL 路径</translation>
     </message>
@@ -211,6 +216,11 @@
         <location filename="../src/main.qml" line="54"/>
         <source>Settings</source>
         <translation>设置</translation>
+    </message>
+    <message>
+        <location filename="../src/main.qml" line="68"/>
+        <source>An error occurred while downloading %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

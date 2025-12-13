@@ -2,6 +2,10 @@ from PySide6.QtCore import QObject, Slot, Signal, QLocale, QTranslator
 from PySide6.QtWidgets import QApplication
 from RinUI import ConfigManager, RinUITranslator
 from pathlib import Path
+from loguru import logger
+
+ROOT = Path(Path(__file__).parent.parent)
+DEFAULT_DOWNLOAD_PATH = ROOT / "downloads"
 
 DEFAULT_CONFIG = {
     "proxy": {
@@ -14,7 +18,7 @@ DEFAULT_CONFIG = {
     "file_server": "1",
     "oversea": False,
     "header": "0",
-    "default_path": Path(Path(__file__).parent.parent / "downloads")
+    "default_path": DEFAULT_DOWNLOAD_PATH.as_posix()
 }
 
 class HelperConfig(ConfigManager, QObject):
@@ -44,7 +48,7 @@ class HelperConfig(ConfigManager, QObject):
     def setLanguage(self, language: str) -> None:
         lang_path = Path(f"./i18n/{language}.qm")
         if not lang_path.exists():  # fallback
-            print(f"Language file {lang_path} not found. Fallback to default (en_US)")
+            logger.warning(f"Language file {lang_path} not found. Fallback to default (en_US)")
             language = "en_US"
 
         self.config["locale"]["language"] = language
@@ -57,6 +61,7 @@ class HelperConfig(ConfigManager, QObject):
         QApplication.instance().installTranslator(self.ui_translator)
         QApplication.instance().installTranslator(self.translator)
         self.parent.engine.retranslate()
+        logger.success(f"语言已设置为 {language}")
 
     @Slot(result=str)
     def getFileServer(self) -> str:
@@ -66,15 +71,17 @@ class HelperConfig(ConfigManager, QObject):
     def setFileServer(self, server: str) -> None:
         self.config["file_server"] = server
         self.save_config()
+        logger.success(f"文件服务器已设置为 {server}")
 
     @Slot(result=bool)
     def getOverseaServer(self) -> bool:
-        return self.config["file_server"] != "false"
+        return self.config["oversea"]
 
     @Slot(bool)
     def setOverseaServer(self, oversea: bool) -> None:
         self.config["oversea"] = oversea
         self.save_config()
+        logger.success(f"海外服务器已设置为 {oversea}")
 
     @Slot(result=str)
     def getHeader(self) -> str:
@@ -84,6 +91,7 @@ class HelperConfig(ConfigManager, QObject):
     def setHeader(self, header: str) -> None:
         self.config["header"] = header
         self.save_config()
+        logger.success(f"请求头已设置为 {header}")
 
     @Slot(result=str)
     def getDefaultPath(self) -> str:
@@ -93,3 +101,7 @@ class HelperConfig(ConfigManager, QObject):
     def setDefaultPath(self, path: str) -> None:
         self.config["default_path"] = path
         self.save_config()
+        logger.success(f"默认下载路径已设置为 {path}")
+
+if __name__ == "__main__":
+    print(Path(Path(__file__).parent.parent / "downloads"))

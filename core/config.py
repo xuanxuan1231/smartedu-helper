@@ -3,12 +3,15 @@ from PySide6.QtWidgets import QApplication
 from RinUI import ConfigManager, RinUITranslator
 from pathlib import Path
 from loguru import logger
+import urllib.request
+import ipaddress
 
 ROOT = Path(Path(__file__).parent.parent)
 DEFAULT_DOWNLOAD_PATH = ROOT / "downloads"
 
 DEFAULT_CONFIG = {
     "proxy": {
+        "enabled": "system",
         "http": None,
         "https": None
     },
@@ -20,6 +23,13 @@ DEFAULT_CONFIG = {
     "header": "0",
     "default_path": DEFAULT_DOWNLOAD_PATH.as_posix()
 }
+
+def is_ip(address: str) -> bool:
+    try:
+        ipaddress.ip_address(address)
+        return True
+    except ValueError:
+        return False
 
 class HelperConfig(ConfigManager, QObject):
     def __init__(self, parent = None):
@@ -102,6 +112,39 @@ class HelperConfig(ConfigManager, QObject):
         self.config["default_path"] = path
         self.save_config()
         logger.success(f"默认下载路径已设置为 {path}")
+
+    @Slot(result=str)
+    def getProxyEnabled(self) -> str:
+        return self.config["proxy"]["enabled"]
+
+    @Slot(result=dict)
+    def getProxy(self) -> dict:
+        if self.config["proxy"]["enabled"] == "no":
+            return {"http": None, "https": None}
+        elif self.config["proxy"]["enabled"] == "system":
+            return urllib.request.getproxies()
+        else:
+            return {"http": self.config["proxy"]["http"], "https": self.config["proxy"]["https"]}
+    
+    @Slot(str)
+    def setProxyEnabled(self, enabled: str) -> None:
+        self.config["proxy"]["enabled"] = enabled
+        self.save_config()
+        logger.success(f"代理已设置为 {enabled}")
+
+    @Slot(str, str, str, str, str)
+    def setProxy(self, ip: str, port: str, protocol: str, username: str, password: str) -> None:
+        if ip == "" or port == "" or is_ip(ip) == False:
+            self.config["proxy"]["http"] = None
+            self.config["proxy"]["https"] = None
+            self.save_config()
+            logger.success("代理已清除")
+            return
+        proxy = f"{protocol}://{username + ":" + password + "@" if username and password else ""}{ip}:{port}"
+        self.config["proxy"]["http"] = proxy
+        self.config["proxy"]["https"] = proxy
+        self.save_config()
+        logger.success(f"代理已设置为 {proxy}")
 
 if __name__ == "__main__":
     print(Path(Path(__file__).parent.parent / "downloads"))

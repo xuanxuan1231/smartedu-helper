@@ -306,6 +306,51 @@
         <translation>从海外 (Oversea) 服务器下载课本。不需要解析请求头。中国大陆用户无法访问。</translation>
     </message>
     <message>
+        <location filename="../src/pages/settings.qml" line="83"/>
+        <source>Proxy</source>
+        <translation>代理</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="84"/>
+        <source>Use a proxy for downloading textbooks. Linux users may not be able to use the &quot;System&quot; option.</source>
+        <translation>下载时使用代理。Linux 用户可能不能使用&quot;系统代理&quot;选项。</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="90"/>
+        <source>Direct</source>
+        <translation>直连</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="91"/>
+        <source>System</source>
+        <translation>系统代理</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="92"/>
+        <source>Custom</source>
+        <translation>自定义代理</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="130"/>
+        <source>Username</source>
+        <translation>用户名</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="140"/>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="151"/>
+        <source>IP Address</source>
+        <translation>IP 地址</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="176"/>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
         <source>Download textbooks from oversea server. No need to parse header.</source>
         <translation type="vanished">从海外 (Oversea) 服务器下载课本。不需要解析请求头。</translation>
     </message>

@@ -7,7 +7,6 @@ import "../components"
 FluentPage {
     id: downloadsPage
     title: qsTr("Downloads")
-    anchors.fill: parent
 
     ColumnLayout {
         Repeater {

@@ -307,6 +307,51 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/pages/settings.qml" line="83"/>
+        <source>Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="84"/>
+        <source>Use a proxy for downloading textbooks. Linux users may not be able to use the &quot;System&quot; option.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="90"/>
+        <source>Direct</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="91"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="92"/>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="130"/>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="140"/>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="151"/>
+        <source>IP Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/settings.qml" line="176"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/pages/settings.qml" line="20"/>
         <source>Use System Language</source>
         <translation type="unfinished"></translation>

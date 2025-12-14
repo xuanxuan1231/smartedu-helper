@@ -57,8 +57,8 @@ class DownloadManager(QObject):
                 return 
             if task["status"] == "pending":
                 task["status"] = "in_progress"
-                self.downloadThread = DownloadThread(task["name"], task["url"], {"x-nd-auth": task["headers"]}, task["save_path"])
-                self.downloadThread.finished.connect(lambda: self.taskCompleted.emit(task["name"]))
+                self.downloadThread = DownloadThread(task["name"], task["url"], {"x-nd-auth": task["headers"]}, task["save_path"], parent=self)
+                self.downloadThread.completed.connect(lambda: self.taskCompleted.emit(task["name"]))
                 self.downloadThread.error.connect(lambda msg, name=task["name"]: self.taskError.emit(name, msg))
                 self.downloadThread.progress.connect(lambda progress, name=task["name"]: self.updateProgress(name, progress))
                 self.downloadThread.start()
@@ -83,6 +83,7 @@ class DownloadManager(QObject):
         for task in self.tasks:
             if task["name"] == name:
                 task["status"] = "error"
+        logger.debug(f"任务 {name} 出错: {error_message}。标记为错误状态。")
         self.dataUpdated.emit()
         self.tryNextTask()  # 开始下一个任务
 
@@ -91,21 +92,23 @@ class DownloadManager(QObject):
         return self.tasks
 
 class DownloadThread(QThread):
-    finished = Signal()
+    completed = Signal()
     error = Signal(str)
     progress = Signal(int)
 
-    def __init__(self, name: str, url: str, headers: dict, save_path: str):
+    def __init__(self, name: str, url: str, headers: dict, save_path: str, parent):
         super().__init__()
         self.name = name
         self.url = url
         self.headers = headers
         self.save_path = Path(save_path)
+        self.parent = parent
+        self.proxies = self.parent.parent.helperConfig.getProxy()
 
     def run(self):
         try:
             logger.debug("开始下载")
-            resp = requests.get(self.url, headers=self.headers, stream=True, timeout=30)
+            resp = requests.get(self.url, headers=self.headers, stream=True, timeout=30, proxies=self.proxies)
             resp.raise_for_status()
             logger.debug("获得响应头")
             total = resp.headers.get("Content-Length")
@@ -127,7 +130,7 @@ class DownloadThread(QThread):
                     if total:
                         percent = int(downloaded * 100 / total)
                     else:
-                        # If total size unknown, keep showing 0 until finished.
+                        # If total size unknown, keep showing 0 until completed.
                         percent = 0
 
                     if percent != last_percent:
@@ -142,6 +145,8 @@ class DownloadThread(QThread):
             logger.error(f"下载出错: {e}")
             logger.debug(f"Headers: {self.headers}")
             self.error.emit(str(e))
+            logger.debug("触发线程error信号")
             return
 
-        self.finished.emit()
+        self.completed.emit()
+        logger.debug("触发线程completed信号")

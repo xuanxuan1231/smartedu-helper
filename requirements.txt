@@ -9,3 +9,4 @@ requests==2.32.5
 rinui==0.1.9
 shiboken6==6.10.1
 urllib3==2.5.0
+loguru

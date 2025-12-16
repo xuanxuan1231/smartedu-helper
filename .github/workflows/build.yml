@@ -20,7 +20,7 @@ jobs:
           activate-environment: true
         
       - name: Restore list
-        run: git submodule update --remote
+        run: git submodule update --init
 
       - name: Install dependencies
         run: |

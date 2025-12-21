@@ -1,0 +1,29 @@
+name: Sync
+on: 
+  push:
+  workflow_dispatch:
+jobs:
+  gitee:
+    name: Sync to Gitee
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+      
+      - name: Configure SSH Key
+        uses: khoazero123/ssh-key-action@v2.5.2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          name: id_ed25519
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+            
+      - name: Change Remote Repository
+        run: |
+          git remote remove origin
+          git remote add origin git@gitee.com:xuanxuan1231/smartedu-helper.git
+          git fetch
+      
+      - name: Force Push
+        run: |
+          git push -u origin main -f

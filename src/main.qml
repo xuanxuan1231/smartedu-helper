@@ -14,10 +14,15 @@ FluentWindow {
     visible: true
 
     navigationItems: [
-        {
+        /*{
             title: qsTr("Download Textbooks"),
             icon: "ic_fluent_arrow_download_20_regular",
             page: Qt.resolvedUrl("pages/download.qml"),
+        },*/
+        {
+            title: qsTr("Credential"),
+            icon: "ic_fluent_contact_card_20_regular",
+            page: Qt.resolvedUrl("pages/credential.qml"),
         },
         {
             title: qsTr("Textbooks"),

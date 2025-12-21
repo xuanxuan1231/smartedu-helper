@@ -2,6 +2,49 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>CredentialInfo</name>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="34"/>
+        <source>Ticket Granting Cookie (TGC)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="57"/>
+        <source>Access Token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="76"/>
+        <source>Retrieve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="96"/>
+        <source>Refresh Token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="120"/>
+        <source>Expires At</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="144"/>
+        <source>Secret Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="164"/>
+        <source>Unexpected response from server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="173"/>
+        <source>Tokens retrieved successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DownloadDialog</name>
     <message>
         <location filename="../src/components/DownloadDialog.qml" line="11"/>
@@ -35,6 +78,19 @@
     </message>
 </context>
 <context>
+    <name>DownloadManager</name>
+    <message>
+        <location filename="../core/download.py" line="34"/>
+        <source>Task with the same name already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/download.py" line="48"/>
+        <source>Task added successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LinkInfo</name>
     <message>
         <location filename="../src/components/LinkInfo.qml" line="27"/>
@@ -49,6 +105,29 @@
     <message>
         <location filename="../src/components/LinkInfo.qml" line="64"/>
         <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>credential</name>
+    <message>
+        <location filename="../src/pages/credential.qml" line="11"/>
+        <source>Credential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/credential.qml" line="20"/>
+        <source>Login with SmartEdu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/credential.qml" line="30"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/credential.qml" line="49"/>
+        <source>SmartEdu Login</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -173,52 +252,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="18"/>
-        <source>Download Textbooks</source>
+        <location filename="../src/main.qml" line="23"/>
+        <source>Credential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="23"/>
+        <location filename="../src/main.qml" line="28"/>
         <source>Textbooks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="27"/>
+        <location filename="../src/main.qml" line="32"/>
         <source>Primary School</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="31"/>
+        <location filename="../src/main.qml" line="36"/>
         <source>Junior High School</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="35"/>
+        <location filename="../src/main.qml" line="40"/>
         <source>Primary School (Five-year school system)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="39"/>
+        <location filename="../src/main.qml" line="44"/>
         <source>Junior High School (Five-year school system)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="43"/>
+        <location filename="../src/main.qml" line="48"/>
         <source>Senior High School</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="49"/>
+        <location filename="../src/main.qml" line="54"/>
         <source>Downloads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="54"/>
+        <location filename="../src/main.qml" line="59"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="68"/>
+        <location filename="../src/main.qml" line="73"/>
         <source>An error occurred while downloading %1</source>
         <translation type="unfinished"></translation>
     </message>

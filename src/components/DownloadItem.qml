@@ -6,6 +6,7 @@ Frame {
     id: downloadItem
     property string name
     property string url
+    property string mac
     property string status
     property int progress: 0
 
@@ -47,7 +48,7 @@ Frame {
                     id: urlLabel
                     Layout.fillWidth: true
                     typography: Typography.Caption
-                    text: url
+                    text: url + "\n" + mac
                     color: Theme.currentTheme.colors.textSecondaryColor
                     wrapMode: Text.Wrap
                     maximumLineCount: 3

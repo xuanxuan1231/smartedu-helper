@@ -2,6 +2,49 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN" sourcelanguage="en_US">
 <context>
+    <name>CredentialInfo</name>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="34"/>
+        <source>Ticket Granting Cookie (TGC)</source>
+        <translation>票据</translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="57"/>
+        <source>Access Token</source>
+        <translation>访问</translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="76"/>
+        <source>Retrieve</source>
+        <translation>获取</translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="96"/>
+        <source>Refresh Token</source>
+        <translation>刷新令牌</translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="120"/>
+        <source>Expires At</source>
+        <translation>过期于</translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="144"/>
+        <source>Secret Key</source>
+        <translation>加密密钥</translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="164"/>
+        <source>Unexpected response from server.</source>
+        <translation>意外的服务器响应。</translation>
+    </message>
+    <message>
+        <location filename="../src/components/CredentialInfo.qml" line="173"/>
+        <source>Tokens retrieved successfully.</source>
+        <translation>令牌获取成功。</translation>
+    </message>
+</context>
+<context>
     <name>DownloadDialog</name>
     <message>
         <location filename="../src/components/DownloadDialog.qml" line="11"/>
@@ -35,6 +78,19 @@
     </message>
 </context>
 <context>
+    <name>DownloadManager</name>
+    <message>
+        <location filename="../core/download.py" line="34"/>
+        <source>Task with the same name already exists.</source>
+        <translation>同名任务已存在。</translation>
+    </message>
+    <message>
+        <location filename="../core/download.py" line="48"/>
+        <source>Task added successfully.</source>
+        <translation>成功添加任务。</translation>
+    </message>
+</context>
+<context>
     <name>LinkInfo</name>
     <message>
         <location filename="../src/components/LinkInfo.qml" line="27"/>
@@ -50,6 +106,39 @@
         <location filename="../src/components/LinkInfo.qml" line="64"/>
         <source>Save</source>
         <translation>保存</translation>
+    </message>
+</context>
+<context>
+    <name>credential</name>
+    <message>
+        <location filename="../src/pages/credential.qml" line="11"/>
+        <source>Credential</source>
+        <translation>凭据</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/credential.qml" line="17"/>
+        <source>What&apos;s this?</source>
+        <translation>这是什么？</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/credential.qml" line="18"/>
+        <source>You can log in to SmartEdu so we can help you obtain the credentials, saving you the trouble of doing it manually.</source>
+        <translation>你可以通过 智教中国通行证 登录，这样我们可以帮你获取凭据，免于手动获取。</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/credential.qml" line="29"/>
+        <source>Login with SmartEdu</source>
+        <translation>通过 智教中国通行证 登录</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/credential.qml" line="39"/>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/credential.qml" line="58"/>
+        <source>SmartEdu Login</source>
+        <translation>登录到智教中国通行证</translation>
     </message>
 </context>
 <context>
@@ -173,54 +262,58 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="18"/>
         <source>Download Textbooks</source>
-        <translation>下载课本</translation>
+        <translation type="vanished">下载课本</translation>
     </message>
     <message>
         <location filename="../src/main.qml" line="23"/>
+        <source>Credential</source>
+        <translation>凭据</translation>
+    </message>
+    <message>
+        <location filename="../src/main.qml" line="28"/>
         <source>Textbooks</source>
         <translation>课本</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="27"/>
+        <location filename="../src/main.qml" line="32"/>
         <source>Primary School</source>
         <translation>小学课本</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="31"/>
+        <location filename="../src/main.qml" line="36"/>
         <source>Junior High School</source>
         <translation>初中课本</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="35"/>
+        <location filename="../src/main.qml" line="40"/>
         <source>Primary School (Five-year school system)</source>
         <translation>小学 (五·四学制) 课本</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="39"/>
+        <location filename="../src/main.qml" line="44"/>
         <source>Junior High School (Five-year school system)</source>
         <translation>初中 (五·四学制) 课本</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="43"/>
+        <location filename="../src/main.qml" line="48"/>
         <source>Senior High School</source>
         <translation>高中课本</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="49"/>
+        <location filename="../src/main.qml" line="54"/>
         <source>Downloads</source>
         <translation>下载任务</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="54"/>
+        <location filename="../src/main.qml" line="59"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="68"/>
+        <location filename="../src/main.qml" line="73"/>
         <source>An error occurred while downloading %1</source>
-        <translation type="unfinished"></translation>
+        <translation>下载 %1 时出现错误</translation>
     </message>
 </context>
 <context>

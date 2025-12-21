@@ -36,8 +36,8 @@ class DownloadManager(QObject):
         task = {
             "name": name,
             "url": url,
-            "headers": header,
             "save_path": save_path,
+            "mac": self.parent.authManager.get_mac(url),
             "status": "pending",
             "progress": 0
         }
@@ -57,7 +57,7 @@ class DownloadManager(QObject):
                 return 
             if task["status"] == "pending":
                 task["status"] = "in_progress"
-                self.downloadThread = DownloadThread(task["name"], task["url"], {"x-nd-auth": task["headers"]}, task["save_path"], parent=self)
+                self.downloadThread = DownloadThread(task["name"], task["url"], {"x-nd-auth": task["mac"]}, task["save_path"], parent=self)
                 self.downloadThread.completed.connect(lambda: self.taskCompleted.emit(task["name"]))
                 self.downloadThread.error.connect(lambda msg, name=task["name"]: self.taskError.emit(name, msg))
                 self.downloadThread.progress.connect(lambda progress, name=task["name"]: self.updateProgress(name, progress))

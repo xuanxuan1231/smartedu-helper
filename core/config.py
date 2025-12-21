@@ -21,7 +21,13 @@ DEFAULT_CONFIG = {
     "file_server": "1",
     "oversea": False,
     "header": "0",
-    "default_path": DEFAULT_DOWNLOAD_PATH.as_posix()
+    "default_path": DEFAULT_DOWNLOAD_PATH.as_posix(),
+    "credential": {
+        "access_token": "",
+        "refresh_token": "",
+        "expires_at": "",
+        "mac_key": ""
+    }
 }
 
 def is_ip(address: str) -> bool:
@@ -145,6 +151,16 @@ class HelperConfig(ConfigManager, QObject):
         self.config["proxy"]["https"] = proxy
         self.save_config()
         logger.success(f"代理已设置为 {proxy}")
+
+    @Slot(dict)
+    def setCredential(self, credential: dict) -> None:
+        self.config["credential"] = credential
+        self.save_config()
+        logger.success("凭据已保存")
+    
+    @Slot(result=dict)
+    def getCredential(self) -> dict:
+        return self.config["credential"]
 
 if __name__ == "__main__":
     print(Path(Path(__file__).parent.parent / "downloads"))

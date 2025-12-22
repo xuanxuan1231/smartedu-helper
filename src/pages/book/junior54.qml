@@ -157,7 +157,6 @@ FluentPage {
                         size: 16
                         Layout.alignment: Qt.AlignVCenter
                         onClicked: {
-                            console.log("在写了捏");
                             bookList.currentIndex = index;
                             downloadDialog.open();
                         }

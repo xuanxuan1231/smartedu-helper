@@ -47,6 +47,10 @@ FluentWindow {
                 {
                     title: qsTr("Senior High School"),
                     page: Qt.resolvedUrl("pages/book/senior.qml"),
+                },
+                {
+                    title: qsTr("Special School"),
+                    page: Qt.resolvedUrl("pages/book/speicial.qml"),
                 }
             ],
         },

@@ -18,6 +18,21 @@ FluentPage {
     // Currently selected book item
     property var selectedBook: bookList.model && bookList.currentIndex >= 0 ? bookList.model[bookList.currentIndex] : null
 
+    function updateBookList() {
+        if (!hasBookList || categoryCombo.currentIndex < 0 || periodCombo.currentIndex < 0 ||
+                subjectCombo.currentIndex < 0 || gradeCombo.currentIndex < 0 || volumeCombo.currentIndex < 0) {
+            bookList.model = []
+            return
+        }
+
+        bookList.model = SpecialBookList.get_books(
+                    categoryCombo.currentIndex,
+                    periodCombo.currentIndex,
+                    subjectCombo.currentIndex,
+                    gradeCombo.currentIndex,
+                    volumeCombo.currentIndex)
+    }
+
     RowLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
@@ -44,7 +59,7 @@ FluentPage {
                         subjectCombo.model = []
                         gradeCombo.model = []
                         volumeCombo.model = []
-                        bookList.model = []
+                        updateBookList();
                         return
                     }
                     periods = SpecialBookList.get_periods(currentIndex);
@@ -56,8 +71,9 @@ FluentPage {
                         subjectCombo.model = [];
                         gradeCombo.model = [];
                         volumeCombo.model = [];
-                        bookList.model = [];
+                        updateBookList();
                     }
+                    updateBookList();
                 }
             }
 
@@ -76,7 +92,7 @@ FluentPage {
                         subjectCombo.model = []
                         gradeCombo.model = []
                         volumeCombo.model = []
-                        bookList.model = []
+                        updateBookList();
                         return
                     }
                     subjects = SpecialBookList.get_subjects(categoryCombo.currentIndex, currentIndex);
@@ -87,8 +103,9 @@ FluentPage {
                         subjectCombo.currentIndex = -1;
                         gradeCombo.model = [];
                         volumeCombo.model = [];
-                        bookList.model = [];
+                        updateBookList();
                     }
+                    updateBookList();
                 }
             }
 
@@ -106,7 +123,7 @@ FluentPage {
                     if (!hasBookList) {
                         gradeCombo.model = []
                         volumeCombo.model = []
-                        bookList.model = []
+                        updateBookList();
                         return
                     }
                     grades = SpecialBookList.get_grades(categoryCombo.currentIndex, periodCombo.currentIndex, currentIndex);
@@ -116,8 +133,9 @@ FluentPage {
                     } else {
                         gradeCombo.currentIndex = -1;
                         volumeCombo.model = [];
-                        bookList.model = [];
+                        updateBookList();
                     }
+                    updateBookList();
                 }
             }
 
@@ -134,7 +152,7 @@ FluentPage {
                 onCurrentIndexChanged: {
                     if (!hasBookList) {
                         volumeCombo.model = []
-                        bookList.model = []
+                        updateBookList();
                         return
                     }
                     volumes = SpecialBookList.get_volumes(categoryCombo.currentIndex, periodCombo.currentIndex, subjectCombo.currentIndex, currentIndex);
@@ -143,8 +161,9 @@ FluentPage {
                         volumeCombo.currentIndex = 0;
                     } else {
                         volumeCombo.currentIndex = -1;
-                        bookList.model = [];
+                        updateBookList();
                     }
+                    updateBookList();
                 }
             }
 
@@ -160,11 +179,11 @@ FluentPage {
                 model: hasBookList ? SpecialBookList.get_volumes(categoryCombo.currentIndex, periodCombo.currentIndex, subjectCombo.currentIndex, gradeCombo.currentIndex) : []
                 onCurrentIndexChanged: {
                     if (!hasBookList) {
-                        bookList.model = []
+                        updateBookList();
                         return
                     }
                     books = SpecialBookList.get_books(categoryCombo.currentIndex, periodCombo.currentIndex, subjectCombo.currentIndex, gradeCombo.currentIndex, currentIndex);
-                    bookList.model = books;
+                        updateBookList();
                 }
             }
 

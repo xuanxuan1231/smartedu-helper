@@ -5,7 +5,6 @@ on:
     tags:
       - v*
   workflow_dispatch:
-  pull_request:
 
 jobs:
   build:
@@ -13,13 +12,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v7
         with:
           python-version: 3.13
           activate-environment: true
-        
+
       - name: Restore list
         run: git submodule update --init
 
@@ -28,18 +27,55 @@ jobs:
           uv pip install -r requirements.txt
           uv pip install pyinstaller
 
+      - name: Find PySide6 QtWebView Plugin Path
+        id: find_plugin
+        shell: powershell
+        run: |
+          # 查找 PySide6 的 webview 插件路径。
+          # 虚拟环境通常在仓库根目录的 .venv 文件夹中，或者由 setup-uv 自动设置 VIRTUAL_ENV 环境变量。
+          # 插件路径通常为: $env:VIRTUAL_ENV\Lib\site-packages\PySide6\Qt\plugins\webview
+          
+          # 尝试直接使用 VIRTUAL_ENV 环境变量来构建路径
+          $pyside_plugin_path = Join-Path $env:VIRTUAL_ENV "Lib\site-packages\PySide6\Qt\plugins\webview"
+          
+          $plugin_path = $null
+          if (Test-Path $pyside_plugin_path -PathType Container) {
+            $plugin_path = $pyside_plugin_path
+          } else {
+            # 如果 VIRTUAL_ENV 不存在或路径不正确，则在整个虚拟环境中递归查找
+            # 这种方法更健壮，但速度稍慢
+            $plugin_path = Get-ChildItem -Path $env:VIRTUAL_ENV -Recurse -Filter "webview" -ErrorAction SilentlyContinue | Where-Object { $_.PSIsContainer -and $_.FullName -like "*PySide6\Qt\plugins\webview" } | Select-Object -ExpandProperty FullName
+          }
+          
+          if ($plugin_path) {
+            # 将找到的路径设置为环境变量，供下一步的 pyinstaller 使用
+            # GitHub Actions 环境变量设置语法
+            echo "QT_WEBVIEW_PLUGIN_PATH=$plugin_path" | Out-File -FilePath $env:GITHUB_ENV -Encoding UTF8 -Append
+            echo "找到 PySide6 QtWebView 插件路径: $plugin_path"
+          } else {
+            echo "未找到 PySide6 QtWebView 插件路径。请检查 PySide6 是否正确安装。"
+            # 即使未找到，也继续执行，pyinstaller 可能会有自己的 hook
+          }
+
       - name: Build
         run: |
-          $qtWebViewPath = (python -c "import pathlib, PySide6; print(pathlib.Path(PySide6.__file__).parent / 'Qt/plugins/webview')").Trim()
+          # 检查 QT_WEBVIEW_PLUGIN_PATH 变量是否存在，如果存在则添加到 --add-data
+          $addDataWebView = ""
+          if ($env:QT_WEBVIEW_PLUGIN_PATH) {
+            # pyinstaller 的 --add-data 格式为 "src:dest"
+            # src 是插件的完整路径，dest 是在打包后的程序目录中的相对路径，应为 plugins/webview
+            # 注意：在 PowerShell 中，需要对路径中的空格和特殊字符进行适当处理，这里使用双引号包裹
+            $addDataWebView = "--add-data `"$env:QT_WEBVIEW_PLUGIN_PATH:plugins/webview`""
+          }
+          
           pyinstaller `
             --noconsole `
-            --hidden-import PySide6.QtWebView `
             --contents-directory="." `
             --name Smartedu-Helper `
             --add-data src:src `
             --add-data i18n:i18n `
             --add-data list:list `
-            --add-binary "$qtWebViewPath;PySide6/Qt/plugins/webview" `
+            $addDataWebView `
             app.py
 
       - name: Zip

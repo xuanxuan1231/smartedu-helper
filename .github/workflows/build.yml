@@ -30,6 +30,7 @@ jobs:
 
       - name: Build
         run: |
+          $qtWebViewPath = (python -c "import pathlib, PySide6; print(pathlib.Path(PySide6.__file__).parent / 'Qt/plugins/webview')").Trim()
           pyinstaller `
             --noconsole `
             --hidden-import PySide6.QtWebView `
@@ -38,6 +39,7 @@ jobs:
             --add-data src:src `
             --add-data i18n:i18n `
             --add-data list:list `
+            --add-binary "$qtWebViewPath;PySide6/Qt/plugins/webview" `
             app.py
 
       - name: Zip

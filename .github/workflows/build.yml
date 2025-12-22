@@ -31,6 +31,7 @@ jobs:
         run: |
           pyinstaller `
             --noconsole `
+            --hidden-import PySide6.QtWebView `
             --contents-directory="." `
             --name Smartedu-Helper `
             --add-data src:src `

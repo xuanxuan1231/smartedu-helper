@@ -5,6 +5,7 @@ on:
     tags:
       - v*
   workflow_dispatch:
+  pull_request:
 
 jobs:
   build:
@@ -12,13 +13,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v7
         with:
           python-version: 3.13
           activate-environment: true
-        
+
       - name: Restore list
         run: git submodule update --init
 
@@ -28,7 +29,7 @@ jobs:
           uv pip install pyinstaller
 
       - name: Build
-        run: |
+        run: |          
           pyinstaller `
             --noconsole `
             --contents-directory="." `
@@ -36,6 +37,7 @@ jobs:
             --add-data src:src `
             --add-data i18n:i18n `
             --add-data list:list `
+            --add-binary ".venv/Lib/site-packages/PySide6/plugins/webview:PySide6/plugins/webview" `
             app.py
 
       - name: Zip

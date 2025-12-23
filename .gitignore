@@ -3,3 +3,6 @@ RinUI
 __pycache__/
 config.json
 downloads/
+dist/
+build/
+*.spec

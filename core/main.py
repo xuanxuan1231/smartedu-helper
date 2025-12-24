@@ -1,8 +1,4 @@
-import sys
-from PySide6.QtWidgets import QApplication
-from PySide6.QtWebView import QtWebView
-
-import RinUI
+from PySide6.QtWebEngineQuick import QtWebEngineQuick
 from RinUI import RinUIWindow
 
 from core import *
@@ -10,7 +6,8 @@ from core import *
 
 class MainWindow(RinUIWindow):
     def __init__(self):
-        QtWebView.initialize()
+        # Required for QML `import QtWebEngine` / `WebEngineView`
+        QtWebEngineQuick.initialize()
         super().__init__()
 
         # Create backend objects before loading QML so context properties are available immediately.

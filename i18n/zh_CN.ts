@@ -485,34 +485,34 @@
     </message>
 </context>
 <context>
-    <name>speicial</name>
+    <name>special</name>
     <message>
-        <location filename="../src/pages/book/speicial.qml" line="8"/>
+        <location filename="../src/pages/book/special.qml" line="8"/>
         <source>Special School Textbooks</source>
         <translation>特殊学校课本</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/speicial.qml" line="47"/>
+        <location filename="../src/pages/book/special.qml" line="47"/>
         <source>Category</source>
         <translation>类别</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/speicial.qml" line="81"/>
+        <location filename="../src/pages/book/special.qml" line="81"/>
         <source>Period</source>
         <translation>学段</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/speicial.qml" line="113"/>
+        <location filename="../src/pages/book/special.qml" line="113"/>
         <source>Subject</source>
         <translation>学科</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/speicial.qml" line="143"/>
+        <location filename="../src/pages/book/special.qml" line="143"/>
         <source>Grade</source>
         <translation>年级</translation>
     </message>
     <message>
-        <location filename="../src/pages/book/speicial.qml" line="171"/>
+        <location filename="../src/pages/book/special.qml" line="171"/>
         <source>Volume</source>
         <translation>册次</translation>
     </message>

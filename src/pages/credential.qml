@@ -1,11 +1,13 @@
 import QtQuick
 import QtQuick.Layouts
-import QtWebView
+import QtWebEngine
 import RinUI
+import QtQuick.Controls
 
 import "../components"
 
 FluentPage {
+    id: root
     property url smartEduUrl: "https://auth.smartedu.cn/uias"
 
     title: qsTr("Credential")
@@ -60,23 +62,27 @@ FluentPage {
         contentHeight: 720
         standardButtons: Dialog.Close
 
-        WebView {
-            id: webView
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            // Delay loading until the dialog opens to avoid unnecessary webview work
-            url: ""
-            onUrlChanged: {
-                if (webView.url.startswith("https://www.smartedu.cn")) {
-                    close()
+        Item {
+            anchors.fill: parent
+
+            WebEngineView {
+                id: webView
+                anchors.fill: parent
+                // 延迟加载，避免未打开时就创建网络活动
+                url: ""
+
+                onUrlChanged: {
+                    const u = String(webView.url)
+                    // 重定向回 smartedu.cn（含 www）时关闭对话框
+                    if (u.startsWith("https://www.smartedu.cn") || u.startsWith("https://smartedu.cn")) {
+                        loginDialog.close()
+                    }
                 }
             }
         }
 
-        onOpened: webView.url = smartEduUrl
+        onOpened: webView.url = root.smartEduUrl
         onClosed: webView.url = ""
-
-        
 
     }
     Connections {

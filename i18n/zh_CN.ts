@@ -11,7 +11,7 @@
     <message>
         <location filename="../src/components/CredentialInfo.qml" line="57"/>
         <source>Access Token</source>
-        <translation>访问</translation>
+        <translation>访问令牌</translation>
     </message>
     <message>
         <location filename="../src/components/CredentialInfo.qml" line="76"/>
@@ -80,14 +80,12 @@
 <context>
     <name>DownloadManager</name>
     <message>
-        <location filename="../core/download.py" line="34"/>
         <source>Task with the same name already exists.</source>
-        <translation>同名任务已存在。</translation>
+        <translation type="vanished">同名任务已存在。</translation>
     </message>
     <message>
-        <location filename="../core/download.py" line="48"/>
         <source>Task added successfully.</source>
-        <translation>成功添加任务。</translation>
+        <translation type="vanished">成功添加任务。</translation>
     </message>
 </context>
 <context>
@@ -111,32 +109,32 @@
 <context>
     <name>credential</name>
     <message>
-        <location filename="../src/pages/credential.qml" line="11"/>
+        <location filename="../src/pages/credential.qml" line="13"/>
         <source>Credential</source>
         <translation>凭据</translation>
     </message>
     <message>
-        <location filename="../src/pages/credential.qml" line="17"/>
+        <location filename="../src/pages/credential.qml" line="19"/>
         <source>What&apos;s this?</source>
         <translation>这是什么？</translation>
     </message>
     <message>
-        <location filename="../src/pages/credential.qml" line="18"/>
+        <location filename="../src/pages/credential.qml" line="20"/>
         <source>You can log in to SmartEdu so we can help you obtain the credentials, saving you the trouble of doing it manually.</source>
         <translation>你可以通过 智教中国通行证 登录，这样我们可以帮你获取凭据，免于手动获取。</translation>
     </message>
     <message>
-        <location filename="../src/pages/credential.qml" line="29"/>
+        <location filename="../src/pages/credential.qml" line="31"/>
         <source>Login with SmartEdu</source>
         <translation>通过 智教中国通行证 登录</translation>
     </message>
     <message>
-        <location filename="../src/pages/credential.qml" line="39"/>
+        <location filename="../src/pages/credential.qml" line="41"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/credential.qml" line="58"/>
+        <location filename="../src/pages/credential.qml" line="60"/>
         <source>SmartEdu Login</source>
         <translation>登录到智教中国通行证</translation>
     </message>
@@ -301,17 +299,22 @@
         <translation>高中课本</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="54"/>
+        <location filename="../src/main.qml" line="52"/>
+        <source>Special School</source>
+        <translation>特殊学校课本</translation>
+    </message>
+    <message>
+        <location filename="../src/main.qml" line="58"/>
         <source>Downloads</source>
         <translation>下载任务</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="59"/>
+        <location filename="../src/main.qml" line="63"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../src/main.qml" line="73"/>
+        <location filename="../src/main.qml" line="77"/>
         <source>An error occurred while downloading %1</source>
         <translation>下载 %1 时出现错误</translation>
     </message>
@@ -358,6 +361,29 @@
     </message>
     <message>
         <location filename="../src/pages/book/primary54.qml" line="101"/>
+        <source>Grade</source>
+        <translation>年级</translation>
+    </message>
+</context>
+<context>
+    <name>senior</name>
+    <message>
+        <location filename="../src/pages/book/senior.qml" line="8"/>
+        <source>Senior High School Textbooks</source>
+        <translation>高中课本</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/senior.qml" line="31"/>
+        <source>Subject</source>
+        <translation>学科</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/senior.qml" line="73"/>
+        <source>Version</source>
+        <translation>版本</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/senior.qml" line="101"/>
         <source>Grade</source>
         <translation>年级</translation>
     </message>
@@ -456,6 +482,39 @@
         <location filename="../src/pages/settings.qml" line="20"/>
         <source>Use System Language</source>
         <translation>使用系统语言</translation>
+    </message>
+</context>
+<context>
+    <name>speicial</name>
+    <message>
+        <location filename="../src/pages/book/speicial.qml" line="8"/>
+        <source>Special School Textbooks</source>
+        <translation>特殊学校课本</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/speicial.qml" line="47"/>
+        <source>Category</source>
+        <translation>类别</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/speicial.qml" line="81"/>
+        <source>Period</source>
+        <translation>学段</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/speicial.qml" line="113"/>
+        <source>Subject</source>
+        <translation>学科</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/speicial.qml" line="143"/>
+        <source>Grade</source>
+        <translation>年级</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/book/speicial.qml" line="171"/>
+        <source>Volume</source>
+        <translation>册次</translation>
     </message>
 </context>
 </TS>

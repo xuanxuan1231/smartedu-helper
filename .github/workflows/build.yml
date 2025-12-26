@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           uv pip install -r requirements.txt
-          uv pip install pyinstaller
+          uv pip install pip
 
       - name: Build
         run: |          
@@ -34,13 +34,15 @@ jobs:
 
       - name: Zip
         run: |
-          powershell Compress-Archive -Path dist/Smartedu-Helper/* -DestinationPath dist/Smartedu-Helper-Windows.zip
+          # powershell Compress-Archive -Path dist/Smartedu-Helper/* -DestinationPath dist/Smartedu-Helper-Windows.zip
+          powershell Compress-Archive -Path ./* -DestinationPath Smartedu-Test.zip
 
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: Smartedu-Helper-Windows
-          path: dist/Smartedu-Helper-Windows.zip
+          # path: dist/Smartedu-Helper-Windows.zip
+          # path: Smartedu-Test.zip
 
   release:
     needs: build

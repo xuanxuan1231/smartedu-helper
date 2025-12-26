@@ -30,15 +30,7 @@ jobs:
 
       - name: Build
         run: |          
-          pyinstaller `
-            --noconsole `
-            --contents-directory="." `
-            --name Smartedu-Helper `
-            --add-data src:src `
-            --add-data i18n:i18n `
-            --add-data list:list `
-            --add-binary ".venv/Lib/site-packages/PySide6/plugins/webview:PySide6/plugins/webview" `
-            app.py
+          pyside6-deploy app.py
 
       - name: Zip
         run: |

@@ -63,8 +63,8 @@ FluentPage {
         standardButtons: Dialog.Close
 
         Item {
-            anchors.fill: parent
-
+            Layout.fillWidth: true
+            Layout.fillHeight: true
             WebEngineView {
                 id: webView
                 anchors.fill: parent

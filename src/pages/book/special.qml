@@ -65,6 +65,7 @@ FluentPage {
                     periods = SpecialBookList.get_periods(currentIndex);
                     periodCombo.model = periods;
                     if (periods && periods.length > 0) {
+                        periodCombo.currentIndex = -1; // 触发上级combobox内容不变的combobox的更新 for refreshed model
                         periodCombo.currentIndex = 0;
                     } else {
                         periodCombo.currentIndex = -1;
@@ -98,6 +99,7 @@ FluentPage {
                     subjects = SpecialBookList.get_subjects(categoryCombo.currentIndex, currentIndex);
                     subjectCombo.model = subjects;
                     if (subjects && subjects.length > 0) {
+                        subjectCombo.currentIndex = -1; // 触发上级combobox内容不变的combobox的更新
                         subjectCombo.currentIndex = 0;
                     } else {
                         subjectCombo.currentIndex = -1;
@@ -129,6 +131,7 @@ FluentPage {
                     grades = SpecialBookList.get_grades(categoryCombo.currentIndex, periodCombo.currentIndex, currentIndex);
                     gradeCombo.model = grades;
                     if (grades && grades.length > 0) {
+                        gradeCombo.currentIndex = -1; // 触发上级combobox内容不变的combobox的更新
                         gradeCombo.currentIndex = 0;
                     } else {
                         gradeCombo.currentIndex = -1;
@@ -158,6 +161,7 @@ FluentPage {
                     volumes = SpecialBookList.get_volumes(categoryCombo.currentIndex, periodCombo.currentIndex, subjectCombo.currentIndex, currentIndex);
                     volumeCombo.model = volumes;
                     if (volumes && volumes.length > 0) {
+                        volumeCombo.currentIndex = -1; // 触发上级combobox内容不变的combobox的更新
                         volumeCombo.currentIndex = 0;
                     } else {
                         volumeCombo.currentIndex = -1;
@@ -206,7 +210,6 @@ FluentPage {
 
             delegate: ListViewDelegate {
                 middleArea: [
-                    // middleArea takes a list of items for its ColumnLayout
                     Text {
                         text: modelData.name
                         elide: Text.ElideRight
@@ -214,7 +217,7 @@ FluentPage {
                         font.pixelSize: 16
                     },
                     Text {
-                        text: modelData.path // Secondary text from model
+                        text: modelData.path
                         font.pixelSize: 12
                         color: Theme.currentTheme.colors.textSecondaryColor
                         elide: Text.ElideRight

@@ -31,7 +31,7 @@ class AuthManager(QObject):
             response = requests.get("https://sso.basic.smartedu.cn/v1.1/sso/tokens", 
                                 headers={"sdp-app-id": SDP_APP_ID, 
                                         "Referer": "https://basic.smartedu.cn/"},
-                                cookies={"UC_SSO_TGC-e5649925-441d-4a53-b525-51a2f1c4e0a8-product": tgc}
+                                cookies={TGC_COOKIE_NAME: tgc}
                                 )
             data = response.json()
             if response.status_code != 200:

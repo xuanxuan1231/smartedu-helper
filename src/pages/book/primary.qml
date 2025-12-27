@@ -17,6 +17,15 @@ FluentPage {
     // Currently selected book item
     property var selectedBook: bookList.model && bookList.currentIndex >= 0 ? bookList.model[bookList.currentIndex] : null
 
+    function updateBookList() {
+        if (!hasBookList || subjectCombo.currentIndex < 0 || versionCombo.currentIndex < 0 || gradeCombo.currentIndex < 0) {
+            bookList.model = []
+            return
+        }
+
+        bookList.model = PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex)
+    }
+
     RowLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
@@ -41,31 +50,21 @@ FluentPage {
                     if (!hasBookList) {
                         versionCombo.model = []
                         gradeCombo.model = []
-                        bookList.model = []
+                        updateBookList();
                         return
                     }
                     versions = PrimaryBookList.get_versions(currentIndex);
                     versionCombo.model = versions;
                     if (versions && versions.length > 0) {
-                        // 有可用版本
-                        // 初始化版本
+                        // 强制 currentIndex 变化以确保触发刷新
+                        versionCombo.currentIndex = -1;
                         versionCombo.currentIndex = 0;
-                        // 顺便初始化年级
-                        grades = PrimaryBookList.get_grades(currentIndex, versionCombo.currentIndex);
-                        gradeCombo.model = grades;
-                        if (grades && grades.length > 0) {
-                            // 有可用年级
-                            gradeCombo.currentIndex = 0;
-                            // 再顺便初始化书籍
-                            books = PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex);
-                            bookList.model = books;
-                        } else {
-                            gradeCombo.currentIndex = -1;
-                        }
                     } else {
                         versionCombo.currentIndex = -1;
                         gradeCombo.model = [];
+                        updateBookList();
                     }
+                    updateBookList();
                 }
             }
 
@@ -82,18 +81,18 @@ FluentPage {
                 onCurrentIndexChanged: {
                     if (!hasBookList) {
                         gradeCombo.model = []
-                        bookList.model = []
+                        updateBookList();
                         return
                     }
                     grades = PrimaryBookList.get_grades(subjectCombo.currentIndex, currentIndex);
                     gradeCombo.model = grades;
                     if (grades && grades.length > 0) {
+                        gradeCombo.currentIndex = -1; // force signal
                         gradeCombo.currentIndex = 0;
-                        books = PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, gradeCombo.currentIndex);
-                        bookList.model = books;
                     } else {
                         gradeCombo.currentIndex = -1;
                     }
+                    updateBookList();
                 }
             }
 
@@ -109,11 +108,10 @@ FluentPage {
                 model: hasBookList ? PrimaryBookList.get_grades(subjectCombo.currentIndex, versionCombo.currentIndex) : []
                 onCurrentIndexChanged: {
                     if (!hasBookList) {
-                        bookList.model = []
+                        updateBookList();
                         return
                     }
-                    books = PrimaryBookList.get_books(subjectCombo.currentIndex, versionCombo.currentIndex, currentIndex);
-                    bookList.model = books;
+                    updateBookList();
                 }
             }}
 

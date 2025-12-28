@@ -9,7 +9,14 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-15-intel]
+        onefile: [true, false]
+        exclude:
+          - os: macos-15-intel
+            onefile: true
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,9 +35,12 @@ jobs:
           uv pip install -r requirements.txt
           uv pip install pyinstaller
 
-      - name: Build
+      - name: Build (Windows)
+        if: runner.os == 'windows-latest'
+        env:
+          ONEFILE_FLAG: ${{ matrix.onefile && '--onefile' || '' }}
         run: |          
-          pyinstaller `
+          pyinstaller app.py $env:ONEFILE_FLAG `
             --noconsole `
             --contents-directory="." `
             --name Smartedu-Helper `
@@ -38,17 +48,75 @@ jobs:
             --add-data i18n:i18n `
             --add-data list:list `
             --add-binary ".venv/Lib/site-packages/PySide6/plugins/webview:PySide6/plugins/webview" `
-            app.py
+            --icon assets/icon.ico
 
-      - name: Zip
+      - name: Zip (Windows)
+        if: runner.os == 'windows-latest'
+        env:
+          ZIP_SUFFIX: ${{ matrix.onefile && '-onefile' || '' }}
         run: |
-          powershell Compress-Archive -Path dist/Smartedu-Helper/* -DestinationPath dist/Smartedu-Helper-Windows.zip
+          powershell Compress-Archive -Path dist/Smartedu-Helper/* -DestinationPath dist/Smartedu-Helper-Windows$env:ZIP_SUFFIX.zip
 
-      - name: Upload
+      - name: Build (macOS)
+        if: runner.os == 'macos-15-intel'
+        env:
+          ONEFILE_FLAG: ${{ matrix.onefile && '--onefile' || '' }}
+        run: |
+          pyinstaller --windowed app.py $ONEFILE_FLAG \
+          --contents-directory="." \
+          --name "Smartedu Helper" \
+          --add-data src:src \
+          --add-data i18n:i18n \
+          --add-data list:list \
+          --add-binary ".venv/lib/python3.12/site-packages/PySide6/Qt/plugins/webview:PySide6/Qt/plugins/webview" \
+          --icon assets/icon.icns
+
+      - name: Zip (macOS)
+        if: runner.os == 'macos-15-intel'
+        run: |
+          hdiutil create -volname "Smartedu Helper" -srcfolder dist -ov -format UDZO Smartedu\ Helper-macOS.dmg
+        
+      - name: Build (Linux)
+        if: runner.os == 'ubuntu-latest'
+        env:
+          ONEFILE_FLAG: ${{ matrix.onefile && '--onefile' || '' }}
+        run: |
+          pyinstaller app.py $ONEFILE_FLAG \
+          --contents-directory="." \
+          --name "Smartedu-Helper" \
+          --add-data src:src \
+          --add-data i18n:i18n \
+          --add-data list:list \
+          --add-binary ".venv/lib/python3.12/site-packages/PySide6/Qt/plugins/webview:PySide6/Qt/plugins/webview" \
+          --icon assets/icon.png
+
+      - name: Zip (Linux)
+        if: runner.os == 'ubuntu-latest'
+        env:
+          ZIP_SUFFIX: ${{ matrix.onefile && '-onefile' || '' }}
+        run: |
+          zip -j dist/Smartedu-Helper-Linux$ZIP_SUFFIX.zip dist/Smartedu-Helper/*
+
+      - name: Upload (Windows)
+        if: runner.os == 'windows-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: Smartedu-Helper-Windows
-          path: dist/Smartedu-Helper-Windows.zip
+          name: Smartedu-Helper-Windows-${{ matrix.onefile && '-onefile' || '' }}
+          path: dist/Smartedu-Helper-Windows*.zip
+
+      - name: Upload (macOS)
+        if: runner.os == 'macos-15-intel'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Smartedu-Helper-macOS
+          path: Smartedu-Helper-macOS.dmg
+          
+      - name: Upload (Linux)
+        if: runner.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Smartedu-Helper-Linux-${{ matrix.onefile && '-onefile' || '' }}
+          path: dist/Smartedu-Helper-Linux*.zip
 
   release:
     needs: build
@@ -58,9 +126,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
-          name: Smartedu-Helper-Windows
           path: dist
 
       - name: Publish GitHub Release

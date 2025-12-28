@@ -131,7 +131,7 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           name: Smartedu Helper ${{ github.ref_name }}
-          files: dist/Smartedu-Helper-Windows.zip
+          files: dist/*
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

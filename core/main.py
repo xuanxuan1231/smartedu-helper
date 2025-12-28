@@ -35,3 +35,5 @@ class MainWindow(RinUIWindow):
         self.engine.rootContext().setContextProperty("AuthManager", self.authManager)
 
         self.load(Path(ROOT / "src/main.qml"))
+
+        self.setIcon(Path(ROOT / "assets/icon.png"))

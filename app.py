@@ -1,11 +1,12 @@
 import sys
 from PySide6.QtWidgets import QApplication
+from pathlib import Path
 
 import RinUI
-from core.main import MainWindow
+from core.main import MainWindow, ROOT
 from loguru import logger
 
-logger.add("logs/log_{time:YYYY-MM-DD}.log", rotation="10 MB", retention="10 days", encoding="utf-8")
+logger.add(Path(ROOT / "logs/log_{time:YYYY-MM-DD}.log"), rotation="10 MB", retention="10 days", encoding="utf-8")
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 from PySide6.QtWebEngineQuick import QtWebEngineQuick
 from RinUI import RinUIWindow
+from pathlib import Path
 
 from core import *
 
@@ -12,12 +13,12 @@ class MainWindow(RinUIWindow):
 
         # Create backend objects before loading QML so context properties are available immediately.
         self.linkParser = LinkParser()
-        self.primaryBookList = GenericBookList("list/primary.json")
-        self.primary54BookList = GenericBookList("list/primary54.json")
-        self.juniorBookList = GenericBookList("list/junior.json")
-        self.junior54BookList = GenericBookList("list/junior54.json")
-        self.seniorBookList = GenericBookList("list/senior.json")
-        self.specialBookList = SpecialBookList("list/special.json")
+        self.primaryBookList = GenericBookList(Path(ROOT / "list/primary.json"))
+        self.primary54BookList = GenericBookList(Path(ROOT / "list/primary54.json"))
+        self.juniorBookList = GenericBookList(Path(ROOT / "list/junior.json"))
+        self.junior54BookList = GenericBookList(Path(ROOT / "list/junior54.json"))
+        self.seniorBookList = GenericBookList(Path(ROOT / "list/senior.json"))
+        self.specialBookList = SpecialBookList(Path(ROOT / "list/special.json"))
         self.helperConfig = HelperConfig(self)
         self.downloadManager = DownloadManager(self)
         self.authManager = AuthManager(self)
@@ -33,4 +34,4 @@ class MainWindow(RinUIWindow):
         self.engine.rootContext().setContextProperty("DownloadManager", self.downloadManager)
         self.engine.rootContext().setContextProperty("AuthManager", self.authManager)
 
-        self.load("src/main.qml")
+        self.load(Path(ROOT / "src/main.qml"))

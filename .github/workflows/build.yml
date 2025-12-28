@@ -10,6 +10,7 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         os: [windows-latest, ubuntu-latest, macos-15-intel]
         onefile: [true, false]
@@ -36,83 +37,78 @@ jobs:
           uv pip install pyinstaller
 
       - name: Build (Windows)
-        if: runner.os == 'windows-latest'
-        env:
-          ONEFILE_FLAG: ${{ matrix.onefile && '--onefile' || '' }}
-        run: |          
-          pyinstaller app.py $env:ONEFILE_FLAG `
-            --noconsole `
-            --contents-directory="." `
-            --name Smartedu-Helper `
-            --add-data src:src `
-            --add-data i18n:i18n `
-            --add-data list:list `
-            --add-binary ".venv/Lib/site-packages/PySide6/plugins/webview:PySide6/plugins/webview" `
-            --icon assets/icon.ico
+        if: matrix.os == 'windows-latest'
+        run: |
+          pyinstaller app.py ${{ matrix.onefile && '--onefile' || '' }} --noconsole --contents-directory="." --name Smartedu-Helper --add-data src:src --add-data i18n:i18n --add-data list:list --add-binary ".venv/Lib/site-packages/PySide6/plugins/webview:PySide6/plugins/webview" --icon assets/icon.ico
 
       - name: Zip (Windows)
-        if: runner.os == 'windows-latest'
+        if: matrix.os == 'windows-latest'
         env:
           ZIP_SUFFIX: ${{ matrix.onefile && '-onefile' || '' }}
         run: |
-          powershell Compress-Archive -Path dist/Smartedu-Helper/* -DestinationPath dist/Smartedu-Helper-Windows$env:ZIP_SUFFIX.zip
+          if ($env:ZIP_SUFFIX -ne '') {
+            # onefile build: directly package the single exe
+            Compress-Archive -Path "dist/Smartedu-Helper.exe" -DestinationPath "dist/Smartedu-Helper-Windows$env:ZIP_SUFFIX.zip" -Force
+          } else {
+            Compress-Archive -Path dist/Smartedu-Helper/* -DestinationPath dist/Smartedu-Helper-Windows.zip -Force
+          }
 
       - name: Build (macOS)
-        if: runner.os == 'macos-15-intel'
-        env:
-          ONEFILE_FLAG: ${{ matrix.onefile && '--onefile' || '' }}
+        if: matrix.os == 'macos-15-intel'
         run: |
-          pyinstaller --windowed app.py $ONEFILE_FLAG \
+          pyinstaller --windowed app.py ${{ matrix.onefile && '--onefile' || '' }} \
           --contents-directory="." \
           --name "Smartedu Helper" \
           --add-data src:src \
           --add-data i18n:i18n \
           --add-data list:list \
-          --add-binary ".venv/lib/python3.12/site-packages/PySide6/Qt/plugins/webview:PySide6/Qt/plugins/webview" \
+          --add-binary ".venv/lib/python3.13/site-packages/PySide6/Qt/plugins/webview:PySide6/Qt/plugins/webview" \
           --icon assets/icon.icns
 
       - name: Zip (macOS)
-        if: runner.os == 'macos-15-intel'
+        if: matrix.os == 'macos-15-intel'
         run: |
           hdiutil create -volname "Smartedu Helper" -srcfolder dist -ov -format UDZO Smartedu\ Helper-macOS.dmg
         
       - name: Build (Linux)
-        if: runner.os == 'ubuntu-latest'
-        env:
-          ONEFILE_FLAG: ${{ matrix.onefile && '--onefile' || '' }}
+        if: matrix.os == 'ubuntu-latest'
         run: |
-          pyinstaller app.py $ONEFILE_FLAG \
+          pyinstaller app.py ${{ matrix.onefile && '--onefile' || '' }} \
           --contents-directory="." \
           --name "Smartedu-Helper" \
           --add-data src:src \
           --add-data i18n:i18n \
           --add-data list:list \
-          --add-binary ".venv/lib/python3.12/site-packages/PySide6/Qt/plugins/webview:PySide6/Qt/plugins/webview" \
+          --add-binary ".venv/lib/python3.13/site-packages/PySide6/Qt/plugins/webview:PySide6/Qt/plugins/webview" \
           --icon assets/icon.png
 
       - name: Zip (Linux)
-        if: runner.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest'
         env:
           ZIP_SUFFIX: ${{ matrix.onefile && '-onefile' || '' }}
         run: |
-          zip -j dist/Smartedu-Helper-Linux$ZIP_SUFFIX.zip dist/Smartedu-Helper/*
+          if [ -n "$ZIP_SUFFIX" ]; then
+            zip -j dist/Smartedu-Helper-Linux$ZIP_SUFFIX.zip dist/Smartedu-Helper
+          else
+            zip -j dist/Smartedu-Helper-Linux.zip dist/Smartedu-Helper/*
+          fi
 
       - name: Upload (Windows)
-        if: runner.os == 'windows-latest'
+        if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v4
         with:
           name: Smartedu-Helper-Windows-${{ matrix.onefile && '-onefile' || '' }}
           path: dist/Smartedu-Helper-Windows*.zip
 
       - name: Upload (macOS)
-        if: runner.os == 'macos-15-intel'
+        if: matrix.os == 'macos-15-intel'
         uses: actions/upload-artifact@v4
         with:
           name: Smartedu-Helper-macOS
-          path: Smartedu-Helper-macOS.dmg
+          path: "Smartedu Helper-macOS.dmg"
           
       - name: Upload (Linux)
-        if: runner.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
           name: Smartedu-Helper-Linux-${{ matrix.onefile && '-onefile' || '' }}

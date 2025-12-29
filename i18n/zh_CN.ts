@@ -257,7 +257,7 @@
     <message>
         <location filename="../src/main.qml" line="8"/>
         <source>Smartedu Helper</source>
-        <translation></translation>
+        <translation>智教平台小助手</translation>
     </message>
     <message>
         <source>Download Textbooks</source>
@@ -276,32 +276,32 @@
     <message>
         <location filename="../src/main.qml" line="32"/>
         <source>Primary School</source>
-        <translation>小学课本</translation>
+        <translation>小学</translation>
     </message>
     <message>
         <location filename="../src/main.qml" line="36"/>
         <source>Junior High School</source>
-        <translation>初中课本</translation>
+        <translation>初中</translation>
     </message>
     <message>
         <location filename="../src/main.qml" line="40"/>
         <source>Primary School (Five-year school system)</source>
-        <translation>小学 (五·四学制) 课本</translation>
+        <translation>小学 (五·四学制)</translation>
     </message>
     <message>
         <location filename="../src/main.qml" line="44"/>
         <source>Junior High School (Five-year school system)</source>
-        <translation>初中 (五·四学制) 课本</translation>
+        <translation>初中 (五·四学制)</translation>
     </message>
     <message>
         <location filename="../src/main.qml" line="48"/>
         <source>Senior High School</source>
-        <translation>高中课本</translation>
+        <translation>高中</translation>
     </message>
     <message>
         <location filename="../src/main.qml" line="52"/>
         <source>Special School</source>
-        <translation>特殊学校课本</translation>
+        <translation>特殊学校</translation>
     </message>
     <message>
         <location filename="../src/main.qml" line="58"/>
@@ -402,7 +402,7 @@
     </message>
     <message>
         <source>Select your preferred Language for Smartedu Helper.</source>
-        <translation type="vanished">选择 Smartedu Helper 的显示语言。</translation>
+        <translation type="vanished">选择智教平台小助手的显示语言。</translation>
     </message>
     <message>
         <location filename="../src/pages/settings.qml" line="43"/>
@@ -412,7 +412,7 @@
     <message>
         <location filename="../src/pages/settings.qml" line="44"/>
         <source>Select a download server.</source>
-        <translation>选择一个下载服务器</translation>
+        <translation>选择一个下载服务器。</translation>
     </message>
     <message>
         <location filename="../src/pages/settings.qml" line="70"/>
@@ -476,7 +476,7 @@
     <message>
         <location filename="../src/pages/settings.qml" line="14"/>
         <source>Select your preferred language for Smartedu Helper.</source>
-        <translation>选择 Smartedu Helper 的显示语言。</translation>
+        <translation>选择智教平台小助手的显示语言。</translation>
     </message>
     <message>
         <location filename="../src/pages/settings.qml" line="20"/>

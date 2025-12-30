@@ -65,7 +65,7 @@ FluentPage {
                     periods = SpecialBookList.get_periods(currentIndex);
                     periodCombo.model = periods;
                     if (periods && periods.length > 0) {
-                        periodCombo.currentIndex = -1; // 触发上级combobox内容不变的combobox的更新 for refreshed model
+                        periodCombo.currentIndex = -1; // 触发上级combobox内容不变的combobox的更新
                         periodCombo.currentIndex = 0;
                     } else {
                         periodCombo.currentIndex = -1;

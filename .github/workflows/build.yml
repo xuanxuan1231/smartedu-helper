@@ -92,7 +92,11 @@ jobs:
       - name: Install dependencies
         run: |
           apt update
-          apt install -y zip git binutils
+          apt install -y zip git binutils \
+            build-essential pkg-config python3-dev libfontconfig1 libxrender1 \
+            libffi-dev libglib2.0-dev libx11-dev libxcb1-dev libglu1-mesa-dev \
+            libxkbcommon-dev libxkbcommon-x11-0 libxcb-shm0-dev libxcb-render0-dev \
+            libgl1-mesa-dev mesa-utils libgl1-mesa-glx libgl1-mesa-dri
 
       - name: Checkout repository
         uses: actions/checkout@v4

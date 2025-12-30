@@ -89,6 +89,11 @@ jobs:
     container:
       image: debian:13
     steps:
+      - name: Install dependencies
+        run: |
+          apt update
+          apt install -y zip git
+
       - name: Checkout repository
         uses: actions/checkout@v4
 

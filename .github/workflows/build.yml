@@ -74,7 +74,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: Smartedu-Helper-Windows-${{ matrix.onefile && '-onefile' || '' }}
+          name: Smartedu-Helper-Windows${{ matrix.onefile && '-onefile' || '' }}
           path: dist/Smartedu-Helper-Windows*.zip
 
       - name: Upload (macOS)
@@ -125,19 +125,13 @@ jobs:
           --icon assets/icon.png
 
       - name: Zip (Linux)
-        env:
-          ZIP_SUFFIX: ${{ matrix.onefile && '-onefile' || '' }}
         run: |
-          if [ -n "$ZIP_SUFFIX" ]; then
-            zip -j dist/Smartedu-Helper-Linux$ZIP_SUFFIX.zip dist/Smartedu-Helper
-          else
-            zip -j dist/Smartedu-Helper-Linux.zip dist/Smartedu-Helper/*
-          fi
+          zip -j dist/Smartedu-Helper-Linux.zip dist/Smartedu-Helper/*
 
       - name: Upload (Linux)
         uses: actions/upload-artifact@v4
         with:
-          name: Smartedu-Helper-Linux-${{ matrix.onefile && '-onefile' || '' }}
+          name: Smartedu-Helper-Linux
           path: dist/Smartedu-Helper-Linux*.zip
 
   release:
@@ -151,13 +145,14 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           path: dist
+          merge-multiple: true
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
           name: Smartedu Helper ${{ github.ref_name }}
-          files: dist/*
+          files: dist/**/*
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     strategy:
-      fail-fast: false
+      # fail-fast: false
       matrix:
         os: [windows-latest, macos-15-intel]
         onefile: [true, false]
@@ -92,7 +92,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt update
-          apt install -y zip git
+          apt install -y zip git binutils
 
       - name: Checkout repository
         uses: actions/checkout@v4

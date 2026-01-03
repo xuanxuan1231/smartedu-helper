@@ -1,5 +1,6 @@
 import sys
 from PySide6.QtWidgets import QApplication
+from PySide6.QtWebEngineQuick import QtWebEngineQuick
 from pathlib import Path
 
 import RinUI
@@ -11,6 +12,7 @@ logger.add(Path(ROOT / "logs/log_{time:YYYY-MM-DD}.log"), rotation="10 MB", rete
 
 if __name__ == '__main__':
     print(RinUI.__file__)
+    QtWebEngineQuick.initialize()
     app = QApplication(sys.argv)
     window = MainWindow()
     app.exec()

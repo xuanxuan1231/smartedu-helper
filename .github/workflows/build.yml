@@ -31,7 +31,7 @@ jobs:
           activate-environment: true
 
       - name: Restore list
-        run: git submodule update --init --depth 1
+        run: git submodule update --init --depth=1
 
       - name: Install dependencies
         run: |
@@ -114,7 +114,7 @@ jobs:
       - name: Restore list
         run: |
           git config --global --add safe.directory /__w/smartedu-helper/smartedu-helper
-          git submodule update --init --depth 1
+          git submodule update --init --depth=1
 
       - name: Install dependencies
         run: |

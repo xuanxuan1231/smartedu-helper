@@ -41,7 +41,7 @@ jobs:
       - name: Build (Windows)
         if: matrix.os == 'windows-latest'
         run: |
-          pyinstaller app.py ${{ matrix.onefile && '--onefile' || '' }} --noconsole --contents-directory="." --name Smartedu-Helper --add-data src:src --add-data i18n:i18n --add-data list:list --add-binary ".venv/Lib/site-packages/PySide6/plugins/webview:PySide6/plugins/webview" --icon assets/icon.ico --strip --exclude-module pytest --exclude-module unittest --exclude-module test
+          pyinstaller app.py ${{ matrix.onefile && '--onefile' || '' }} --noconsole --contents-directory="." --name Smartedu-Helper --add-data src:src --add-data i18n:i18n --add-data list:list --add-binary ".venv/Lib/site-packages/PySide6/plugins/webview:PySide6/plugins/webview" --icon assets/icon.ico --strip --exclude-module pytest --exclude-module unittest --exclude-module test --exclude-module tkinter --exclude-module matplotlib --exclude-module numpy --exclude-module PIL --exclude-module setuptools --exclude-module distutils --exclude-module email --exclude-module xmlrpc --exclude-module pydoc --exclude-module doctest
 
       - name: Zip (Windows)
         if: matrix.os == 'windows-latest'
@@ -69,7 +69,17 @@ jobs:
           --strip \
           --exclude-module pytest \
           --exclude-module unittest \
-          --exclude-module test
+          --exclude-module test \
+          --exclude-module tkinter \
+          --exclude-module matplotlib \
+          --exclude-module numpy \
+          --exclude-module PIL \
+          --exclude-module setuptools \
+          --exclude-module distutils \
+          --exclude-module email \
+          --exclude-module xmlrpc \
+          --exclude-module pydoc \
+          --exclude-module doctest
 
       - name: Zip (macOS)
         if: matrix.os == 'macos-15-intel'
@@ -134,7 +144,17 @@ jobs:
           --strip \
           --exclude-module pytest \
           --exclude-module unittest \
-          --exclude-module test
+          --exclude-module test \
+          --exclude-module tkinter \
+          --exclude-module matplotlib \
+          --exclude-module numpy \
+          --exclude-module PIL \
+          --exclude-module setuptools \
+          --exclude-module distutils \
+          --exclude-module email \
+          --exclude-module xmlrpc \
+          --exclude-module pydoc \
+          --exclude-module doctest
 
       - name: Zip (Linux)
         run: |

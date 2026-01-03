@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v7
@@ -29,7 +31,7 @@ jobs:
           activate-environment: true
 
       - name: Restore list
-        run: git submodule update --init
+        run: git submodule update --init --depth 1
 
       - name: Install dependencies
         run: |
@@ -96,6 +98,8 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v7
@@ -106,7 +110,7 @@ jobs:
       - name: Restore list
         run: |
           git config --global --add safe.directory /__w/smartedu-helper/smartedu-helper
-          git submodule update --init
+          git submodule update --init --depth 1
 
       - name: Install dependencies
         run: |

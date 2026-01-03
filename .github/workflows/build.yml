@@ -41,7 +41,7 @@ jobs:
       - name: Build (Windows)
         if: matrix.os == 'windows-latest'
         run: |
-          pyinstaller app.py ${{ matrix.onefile && '--onefile' || '' }} --noconsole --contents-directory="." --name Smartedu-Helper --add-data src:src --add-data i18n:i18n --add-data list:list --add-binary ".venv/Lib/site-packages/PySide6/plugins/webview:PySide6/plugins/webview" --icon assets/icon.ico
+          pyinstaller app.py ${{ matrix.onefile && '--onefile' || '' }} --noconsole --contents-directory="." --name Smartedu-Helper --add-data src:src --add-data i18n:i18n --add-data list:list --add-binary ".venv/Lib/site-packages/PySide6/plugins/webview:PySide6/plugins/webview" --icon assets/icon.ico --strip --exclude-module pytest --exclude-module unittest --exclude-module test
 
       - name: Zip (Windows)
         if: matrix.os == 'windows-latest'
@@ -65,7 +65,11 @@ jobs:
           --add-data i18n:i18n \
           --add-data list:list \
           --add-binary ".venv/lib/python3.13/site-packages/PySide6/Qt/plugins/webview:PySide6/Qt/plugins/webview" \
-          --icon assets/icon.icns
+          --icon assets/icon.icns \
+          --strip \
+          --exclude-module pytest \
+          --exclude-module unittest \
+          --exclude-module test
 
       - name: Zip (macOS)
         if: matrix.os == 'macos-15-intel'
@@ -126,7 +130,11 @@ jobs:
           --add-data i18n:i18n \
           --add-data list:list \
           --add-binary ".venv/lib/python3.13/site-packages/PySide6/Qt/plugins/webview:PySide6/Qt/plugins/webview" \
-          --icon assets/icon.png
+          --icon assets/icon.png \
+          --strip \
+          --exclude-module pytest \
+          --exclude-module unittest \
+          --exclude-module test
 
       - name: Zip (Linux)
         run: |

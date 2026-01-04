@@ -1,0 +1,25 @@
+[project]
+name = "smartedu-helper"
+version = "1.0.2"
+description = "A visually appealing and user-friendly textbook download tool."
+readme = "README.md"
+requires-python = ">=3.13, <3.14"
+dependencies = [
+    "altgraph",
+    "certifi",
+    "charset-normalizer",
+    "colorama",
+    "darkdetect",
+    "idna",
+    "loguru",
+    "packaging",
+    "pyside6",
+    "pyside6-addons",
+    "pyside6-essentials",
+    "requests",
+    "rinui",
+    "setuptools",
+    "shiboken6",
+    "urllib3",
+    "win32-setctime",
+]

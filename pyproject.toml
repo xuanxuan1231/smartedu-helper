@@ -16,7 +16,7 @@ dependencies = [
     "pyside6",
     "pyside6-addons",
     "pyside6-essentials",
-    "pywebview",
+    "pywebview>=5.0",
     "requests",
     "rinui",
     "setuptools",

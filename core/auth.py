@@ -10,8 +10,7 @@ import time
 import subprocess
 import sys
 import json
-import tempfile
-import os
+import threading
 from urllib.parse import urlparse
 from datetime import datetime
 from pathlib import Path
@@ -21,55 +20,8 @@ SDP_APP_ID = "e5649925-441d-4a53-b525-51a2f1c4e0a8"
 TGC_COOKIE_NAME = "UC_SSO_TGC-e5649925-441d-4a53-b525-51a2f1c4e0a8-product"
 SMARTEDU_LOGIN_URL = "https://auth.smartedu.cn/uias"
 
-# Script to run in a separate process for pywebview login
-_WEBVIEW_SCRIPT = '''
-import webview
-import json
-import sys
-
-TGC_COOKIE_NAME = "UC_SSO_TGC-e5649925-441d-4a53-b525-51a2f1c4e0a8-product"
-SMARTEDU_LOGIN_URL = "https://auth.smartedu.cn/uias"
-
-result = {"tgc": None}
-window = None
-
-def on_loaded():
-    global window, result
-    if window is None:
-        return
-    current_url = window.get_current_url()
-    if current_url is None:
-        return
-    # Check if redirected back to smartedu.cn (login successful)
-    if current_url.startswith("https://www.smartedu.cn") or current_url.startswith("https://smartedu.cn"):
-        try:
-            cookies = window.get_cookies()
-            for cookie in cookies:
-                name = cookie.get("name", "")
-                value = cookie.get("value", "")
-                if name == TGC_COOKIE_NAME:
-                    result["tgc"] = value
-                    break
-        except Exception:
-            pass
-        window.destroy()
-
-def main():
-    global window
-    window = webview.create_window(
-        "SmartEdu Login",
-        SMARTEDU_LOGIN_URL,
-        width=1024,
-        height=720
-    )
-    window.events.loaded += on_loaded
-    webview.start()
-    # Output result as JSON to stdout
-    print(json.dumps(result))
-
-if __name__ == "__main__":
-    main()
-'''
+# Path to the webview login script
+_WEBVIEW_SCRIPT_PATH = Path(__file__).parent / "webview_login.py"
 
 
 class AuthManager(QObject):
@@ -132,38 +84,26 @@ class AuthManager(QObject):
     def _run_login_subprocess(self):
         """Run the webview login in a subprocess and return the TGC cookie."""
         try:
-            # Write the script to a temporary file
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False, encoding='utf-8') as f:
-                f.write(_WEBVIEW_SCRIPT)
-                script_path = f.name
+            # Run the webview login script in a subprocess
+            result = subprocess.run(
+                [sys.executable, str(_WEBVIEW_SCRIPT_PATH)],
+                capture_output=True,
+                text=True,
+                timeout=300  # 5 minute timeout
+            )
             
-            try:
-                # Run the script in a subprocess
-                result = subprocess.run(
-                    [sys.executable, script_path],
-                    capture_output=True,
-                    text=True,
-                    timeout=300  # 5 minute timeout
-                )
-                
-                if result.returncode == 0 and result.stdout.strip():
-                    try:
-                        data = json.loads(result.stdout.strip())
-                        if data.get("tgc"):
-                            self.tgc = data["tgc"]
-                            logger.debug(f"TGC obtained: {self.tgc[:20]}...")
-                            self.tgcCookie.emit()
-                    except json.JSONDecodeError as e:
-                        logger.error(f"Failed to parse webview result: {e}")
-                else:
-                    if result.stderr:
-                        logger.error(f"Webview subprocess error: {result.stderr}")
-            finally:
-                # Clean up the temporary script file
+            if result.returncode == 0 and result.stdout.strip():
                 try:
-                    os.unlink(script_path)
-                except OSError:
-                    pass
+                    data = json.loads(result.stdout.strip())
+                    if data.get("tgc"):
+                        self.tgc = data["tgc"]
+                        logger.debug(f"TGC obtained: {self.tgc[:20]}...")
+                        self.tgcCookie.emit()
+                except json.JSONDecodeError as e:
+                    logger.error(f"Failed to parse webview result: {e}")
+            else:
+                if result.stderr:
+                    logger.error(f"Webview subprocess error: {result.stderr}")
         except subprocess.TimeoutExpired:
             logger.error("Login timed out")
         except Exception as e:
@@ -174,8 +114,6 @@ class AuthManager(QObject):
     @Slot()
     def open_login(self):
         """Open a pywebview window for SmartEdu login in a separate process."""
-        import threading
-        
         if self._login_process is not None:
             logger.warning("Login already in progress")
             return

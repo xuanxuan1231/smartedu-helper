@@ -114,7 +114,8 @@ class AuthManager(QObject):
     @Slot()
     def open_login(self):
         """Open a pywebview window for SmartEdu login in a separate process."""
-        if self._login_process is not None:
+        # Ensure only one login window can be open at a time
+        if self._login_process is not None and self._login_process.is_alive():
             logger.warning("Login already in progress")
             return
         

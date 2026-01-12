@@ -5,12 +5,28 @@ This script runs in a separate process and outputs the TGC cookie as JSON to std
 import webview
 import json
 import sys
+from urllib.parse import urlparse
 
 TGC_COOKIE_NAME = "UC_SSO_TGC-e5649925-441d-4a53-b525-51a2f1c4e0a8-product"
 SMARTEDU_LOGIN_URL = "https://auth.smartedu.cn/uias"
 
+# Allowed domains for successful login redirect
+ALLOWED_REDIRECT_HOSTS = {"www.smartedu.cn", "smartedu.cn"}
+
 result = {"tgc": None}
 window = None
+
+
+def is_valid_redirect_url(url):
+    """Check if the URL is a valid redirect to smartedu.cn using proper URL parsing."""
+    try:
+        parsed = urlparse(url)
+        # Only accept HTTPS and exact domain match
+        if parsed.scheme != "https":
+            return False
+        return parsed.netloc in ALLOWED_REDIRECT_HOSTS
+    except Exception:
+        return False
 
 
 def on_loaded():
@@ -21,7 +37,7 @@ def on_loaded():
     if current_url is None:
         return
     # Check if redirected back to smartedu.cn (login successful)
-    if current_url.startswith("https://www.smartedu.cn") or current_url.startswith("https://smartedu.cn"):
+    if is_valid_redirect_url(current_url):
         try:
             cookies = window.get_cookies()
             for cookie in cookies:

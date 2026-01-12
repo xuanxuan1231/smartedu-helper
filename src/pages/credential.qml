@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import QtWebEngine
 import RinUI
 import QtQuick.Controls
 
@@ -8,7 +7,6 @@ import "../components"
 
 FluentPage {
     id: root
-    property url smartEduUrl: "https://auth.smartedu.cn/uias"
 
     title: qsTr("Credential")
 
@@ -29,7 +27,7 @@ FluentPage {
 
             Button {
                 text: qsTr("Login with SmartEdu")
-                onClicked: loginDialog.open()
+                onClicked: AuthManager.open_login()
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             }
 
@@ -53,43 +51,10 @@ FluentPage {
             cookie: AuthManager.get_tgc()
         }
     }
-    Dialog {
-        id: loginDialog
-
-        modal: true
-        title: qsTr("SmartEdu Login")
-        contentWidth: 1024
-        contentHeight: 720
-        standardButtons: Dialog.Close
-
-        Item {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            WebEngineView {
-                id: webView
-                anchors.fill: parent
-                // 延迟加载，避免未打开时就创建网络活动
-                url: ""
-
-                onUrlChanged: {
-                    const u = String(webView.url)
-                    // 重定向回 smartedu.cn（含 www）时关闭对话框
-                    if (u.startsWith("https://www.smartedu.cn") || u.startsWith("https://smartedu.cn")) {
-                        loginDialog.close()
-                    }
-                }
-            }
-        }
-
-        onOpened: webView.url = root.smartEduUrl
-        onClosed: webView.url = ""
-
-    }
     Connections {
         target: AuthManager
         function onTgcCookie() {
             credentialInfo.cookie = AuthManager.get_tgc()
-            loginDialog.close()
         }
     }
 }

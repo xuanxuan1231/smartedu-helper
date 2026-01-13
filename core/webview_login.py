@@ -5,6 +5,7 @@ This script runs in a separate process and outputs the TGC cookie as JSON to std
 import webview
 import json
 import sys
+import time
 from urllib.parse import urlparse
 
 TGC_COOKIE_NAME = "UC_SSO_TGC-e5649925-441d-4a53-b525-51a2f1c4e0a8-product"
@@ -29,6 +30,42 @@ def is_valid_redirect_url(url):
         return False
 
 
+def extract_cookies():
+    """Extract cookies using multiple methods to ensure we get the TGC cookie."""
+    global window, result
+    if window is None:
+        return False
+    
+    # Method 1: Try get_cookies() API
+    try:
+        cookies = window.get_cookies()
+        if cookies:
+            for cookie in cookies:
+                name = cookie.get("name", "")
+                value = cookie.get("value", "")
+                if name == TGC_COOKIE_NAME and value:
+                    result["tgc"] = value
+                    return True
+    except Exception:
+        pass
+    
+    # Method 2: Try JavaScript document.cookie (as fallback)
+    try:
+        js_cookies = window.evaluate_js("document.cookie")
+        if js_cookies:
+            for part in js_cookies.split(";"):
+                part = part.strip()
+                if "=" in part:
+                    name, value = part.split("=", 1)
+                    if name.strip() == TGC_COOKIE_NAME and value.strip():
+                        result["tgc"] = value.strip()
+                        return True
+    except Exception:
+        pass
+    
+    return False
+
+
 def on_loaded():
     global window, result
     if window is None:
@@ -38,16 +75,9 @@ def on_loaded():
         return
     # Check if redirected back to smartedu.cn (login successful)
     if is_valid_redirect_url(current_url):
-        try:
-            cookies = window.get_cookies()
-            for cookie in cookies:
-                name = cookie.get("name", "")
-                value = cookie.get("value", "")
-                if name == TGC_COOKIE_NAME:
-                    result["tgc"] = value
-                    break
-        except Exception:
-            pass
+        # Wait a bit for cookies to be fully set
+        time.sleep(0.5)
+        extract_cookies()
         window.destroy()
 
 
@@ -60,7 +90,8 @@ def main():
         height=720
     )
     window.events.loaded += on_loaded
-    webview.start()
+    # Disable private mode to allow cookie persistence across domains
+    webview.start(private_mode=False)
     # Output result as JSON to stdout
     print(json.dumps(result))
 

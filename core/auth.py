@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, Signal, Slot
+from PySide6.QtCore import QObject, Signal, Slot, QThread
 from PySide6.QtWidgets import QApplication
 import hmac
 import hashlib
@@ -10,9 +10,6 @@ import time
 import subprocess
 import sys
 import json
-import threading
-import tempfile
-import os
 from urllib.parse import urlparse
 from datetime import datetime
 from pathlib import Path
@@ -22,88 +19,44 @@ SDP_APP_ID = "e5649925-441d-4a53-b525-51a2f1c4e0a8"
 TGC_COOKIE_NAME = "UC_SSO_TGC-e5649925-441d-4a53-b525-51a2f1c4e0a8-product"
 SMARTEDU_LOGIN_URL = "https://auth.smartedu.cn/uias"
 
-# Allowed domains for successful login redirect
-ALLOWED_REDIRECT_HOSTS = {"www.smartedu.cn", "smartedu.cn"}
+# Path to the webview login script module
+_WEBVIEW_SCRIPT_PATH = Path(__file__).parent / "webview_login.py"
 
-# Embedded webview login script (runs in subprocess to avoid Qt event loop conflict)
-_WEBVIEW_LOGIN_SCRIPT = '''
-import webview
-import json
-import time
-from urllib.parse import urlparse
 
-TGC_COOKIE_NAME = "UC_SSO_TGC-e5649925-441d-4a53-b525-51a2f1c4e0a8-product"
-SMARTEDU_LOGIN_URL = "https://auth.smartedu.cn/uias"
-ALLOWED_REDIRECT_HOSTS = {"www.smartedu.cn", "smartedu.cn"}
-
-result = {"tgc": None}
-window = None
-
-def is_valid_redirect_url(url):
-    try:
-        parsed = urlparse(url)
-        if parsed.scheme != "https":
-            return False
-        return parsed.netloc in ALLOWED_REDIRECT_HOSTS
-    except Exception:
-        return False
-
-def extract_cookies():
-    global window, result
-    if window is None:
-        return False
-    try:
-        cookies = window.get_cookies()
-        if cookies:
-            for cookie in cookies:
-                name = cookie.get("name", "")
-                value = cookie.get("value", "")
-                if name == TGC_COOKIE_NAME and value:
-                    result["tgc"] = value
-                    return True
-    except Exception:
-        pass
-    try:
-        js_cookies = window.evaluate_js("document.cookie")
-        if js_cookies:
-            for part in js_cookies.split(";"):
-                part = part.strip()
-                if "=" in part:
-                    name, value = part.split("=", 1)
-                    if name.strip() == TGC_COOKIE_NAME and value.strip():
-                        result["tgc"] = value.strip()
-                        return True
-    except Exception:
-        pass
-    return False
-
-def on_loaded():
-    global window, result
-    if window is None:
-        return
-    current_url = window.get_current_url()
-    if current_url is None:
-        return
-    if is_valid_redirect_url(current_url):
-        time.sleep(0.5)
-        extract_cookies()
-        window.destroy()
-
-def main():
-    global window
-    window = webview.create_window(
-        "SmartEdu Login",
-        SMARTEDU_LOGIN_URL,
-        width=1024,
-        height=720
-    )
-    window.events.loaded += on_loaded
-    webview.start(private_mode=False)
-    print(json.dumps(result))
-
-if __name__ == "__main__":
-    main()
-'''
+class LoginThread(QThread):
+    """QThread that runs the webview login in a subprocess."""
+    tgc_obtained = Signal(str)
+    login_error = Signal(str)
+    
+    def run(self):
+        """Run the webview login script in a subprocess."""
+        try:
+            # Run the webview login script in a subprocess
+            result = subprocess.run(
+                [sys.executable, str(_WEBVIEW_SCRIPT_PATH)],
+                capture_output=True,
+                text=True,
+                timeout=300  # 5 minute timeout
+            )
+            
+            if result.returncode == 0 and result.stdout.strip():
+                try:
+                    data = json.loads(result.stdout.strip())
+                    if data.get("tgc"):
+                        self.tgc_obtained.emit(data["tgc"])
+                    else:
+                        self.login_error.emit("No TGC cookie found")
+                except json.JSONDecodeError as e:
+                    self.login_error.emit(f"Failed to parse webview result: {e}")
+            else:
+                if result.stderr:
+                    self.login_error.emit(f"Webview error: {result.stderr}")
+                else:
+                    self.login_error.emit("Login cancelled or failed")
+        except subprocess.TimeoutExpired:
+            self.login_error.emit("Login timed out")
+        except Exception as e:
+            self.login_error.emit(f"Error running login: {e}")
 
 
 class AuthManager(QObject):
@@ -114,7 +67,17 @@ class AuthManager(QObject):
         super().__init__()
         self.parent = parent
         self.tgc = None
-        self._login_process = None
+        self._login_thread = None
+
+    def _on_tgc_obtained(self, tgc: str):
+        """Handle TGC cookie obtained from login thread."""
+        self.tgc = tgc
+        logger.debug(f"TGC obtained: {self.tgc[:20]}...")
+        self.tgcCookie.emit()
+
+    def _on_login_error(self, error: str):
+        """Handle login error from login thread."""
+        logger.error(f"Login error: {error}")
 
     @Slot(str)
     def get_token(self, tgc: str):
@@ -163,59 +126,19 @@ class AuthManager(QObject):
         timestamp = math.floor(time.time() * 1000)
         return f"{timestamp}:{result}"
 
-    def _run_login_subprocess(self):
-        """Run the webview login in a subprocess and return the TGC cookie."""
-        script_path = None
-        try:
-            # Write the embedded script to a temporary file
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False, encoding='utf-8') as f:
-                f.write(_WEBVIEW_LOGIN_SCRIPT)
-                script_path = f.name
-            
-            # Run the webview login script in a subprocess
-            result = subprocess.run(
-                [sys.executable, script_path],
-                capture_output=True,
-                text=True,
-                timeout=300  # 5 minute timeout
-            )
-            
-            if result.returncode == 0 and result.stdout.strip():
-                try:
-                    data = json.loads(result.stdout.strip())
-                    if data.get("tgc"):
-                        self.tgc = data["tgc"]
-                        logger.debug(f"TGC obtained: {self.tgc[:20]}...")
-                        self.tgcCookie.emit()
-                except json.JSONDecodeError as e:
-                    logger.error(f"Failed to parse webview result: {e}")
-            else:
-                if result.stderr:
-                    logger.error(f"Webview subprocess error: {result.stderr}")
-        except subprocess.TimeoutExpired:
-            logger.error("Login timed out")
-        except Exception as e:
-            logger.error(f"Error running login subprocess: {e}")
-        finally:
-            # Clean up temporary script file
-            if script_path and os.path.exists(script_path):
-                try:
-                    os.unlink(script_path)
-                except OSError:
-                    pass
-            self._login_process = None
-
     @Slot()
     def open_login(self):
-        """Open a pywebview window for SmartEdu login in a separate process."""
+        """Open a pywebview window for SmartEdu login in a separate process using QThread."""
         # Ensure only one login window can be open at a time
-        if self._login_process is not None and self._login_process.is_alive():
+        if self._login_thread is not None and self._login_thread.isRunning():
             logger.warning("Login already in progress")
             return
         
-        # Run in a thread to avoid blocking the Qt event loop
-        self._login_process = threading.Thread(target=self._run_login_subprocess, daemon=True)
-        self._login_process.start()
+        # Create and start the login thread
+        self._login_thread = LoginThread()
+        self._login_thread.tgc_obtained.connect(self._on_tgc_obtained)
+        self._login_thread.login_error.connect(self._on_login_error)
+        self._login_thread.start()
 
     @Slot(result=str)
     def get_tgc(self) -> str:
